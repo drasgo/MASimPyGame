@@ -23,9 +23,14 @@ Sometimes the agent gets stuck at the corners of the object --> still to be full
 Have fun! 
 Here is how it looks:
 Boids Outside the object
+
+
 ![Output sample](https://github.com/IlzeAmandaA/BoidsPyGame/blob/master/boids_outside.gif)
 
+
 Boids Inside the object
+
+
 ![Output sample](https://github.com/IlzeAmandaA/BoidsPyGame/blob/master/boids_inside.gif)
  
 
