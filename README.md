@@ -21,5 +21,11 @@ If you want to change the speed of the birds, then you have to change the global
 Sometimes the agent gets stuck at the corners of the object --> still to be fully fixed 
 
 Have fun! 
+Here is how it looks:
+Boids Outside the object
+![Output sample](https://github.com/IlzeAmandaA/BoidsPyGame/blob/master/boids_outside.gif)
+
+Boids Inside the object
+![Output sample](https://github.com/IlzeAmandaA/BoidsPyGame/blob/master/boids_inside.gif)
  
 
