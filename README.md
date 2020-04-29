@@ -1,36 +1,42 @@
 # BoidsPyGame
 Implementation of flocking in pygame with hallow objects in the environment 
 
-# Contents
-Each individual agent specifications are coded in the file agents.py
-The overall swarm behavior (in this case flocking) is specified in the file swarm.py
-The file functions.py contains supporting functions for vector computations
-The simulations.py file contains the general set-up of the environment (initialization and the game loop)
-Lastly, the file main.py is the execution file. 
+## Contents
+1. `main.py` The main file to execute, can specify here:
+    - the number of boids
+    - screen size
+    - forces to execute (wander, align, separate, cohere) 
+    - obstacle presence
+    - obstacle type 
+    - boids inside or outside the obstacle
+    - to display screen or not 
+    
+2. `simulation.py` Contains the main execution loop: the game is initialized and ran until the user exits the window
+3. `swarm.py` Defines the swarm behavior (weights for each force applied), as well as the update sequence
+4. `agents.py` Defines the properties of boids (mass of a boid) and obstacles. 
+5. `functions.py` Contains useful vector transformation functions 
 
-# How it works
-Simply run the main.py file, where you can specify:
-- Display size
-- Number of Boids
-- Whether to include and obstacle, and if 'True', then whether to position the birds inside or outside
-- Selection of boid actions (wander, align, separate, cohere) 
+## How it works
+Simply run the main.py file from terminal 
 
-If you want to change the speed of the birds, then you have to change the global variables (BOID_MAX_SPEED & BOID_MAX_FORCE) in agent.py code. 
-
-# Bugs
+## Bugs
 Sometimes the agent gets stuck at the corners of the object --> still to be fully fixed 
 
 Have fun! 
 Here is how it looks:
-Boids Outside the object
 
+Boids outside a circle object
 
 ![Output sample](https://github.com/IlzeAmandaA/BoidsPyGame/blob/master/boids_outside.gif)
 
 
-Boids Inside the object
+Boids inside a circle object
 
 
 ![Output sample](https://github.com/IlzeAmandaA/BoidsPyGame/blob/master/boids_inside.gif)
  
+
+Boids inside a convex object
+
+![Output sample](https://github.com/IlzeAmandaA/BoidsPyGame/blob/master/convexgif.gif)
 

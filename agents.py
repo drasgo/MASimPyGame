@@ -92,9 +92,10 @@ class Boid(pygame.sprite.Sprite):
 
 class Obstacle(pygame.sprite.Sprite):
 
-    def __init__(self, pos=None, scale=None, outside=False):
+    def __init__(self, pos=None, scale=None, outside=False, convex=False):
         super(Obstacle,self).__init__()
-        self.image, self.rect = functions.image_with_rect('redd.png', scale) #'red.png'
+        filename = 'redd.png' if not convex else 'convex.png'
+        self.image, self.rect = functions.image_with_rect(filename, scale) #'redd.png'
         self.mask = pygame.mask.from_surface(self.image)
         self.pos = pos if pos is not None else np.zeros(2)
         self.rect = self.image.get_rect(center=self.pos)

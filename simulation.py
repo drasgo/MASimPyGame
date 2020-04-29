@@ -6,12 +6,12 @@ import time
 import numpy as np
 
 
-SIM_BACKGROUND = pygame.Color('black')
+# SIM_BACKGROUND = pygame.Color('gray21') #'black'
 
 class Simulation():
     def __init__(self, num_boids, screen_size, obstacle=False, outside=False,
                  wander=True, align=True,separate=True, cohesion=True,
-                 display_screen = True):
+                 display_screen = True, convex=True):
 
         self.num_boids = num_boids
         self.flock = Flock(screen_size, obstacle, wander=wander, align=align, separate=separate, cohesion =cohesion)
@@ -23,6 +23,15 @@ class Simulation():
         self.barriers = obstacle
         self.outside = outside
         self.display_screen = display_screen
+        self.convex = convex
+        self.sim_background = self.set_background()
+
+    def set_background(self):
+        if self.convex:
+            return pygame.Color('gray21')
+        else:
+            return pygame.Color('black')
+
 
     def display(self):
         for sprite in self.to_display:
@@ -45,7 +54,7 @@ class Simulation():
             min_x, max_x = functions.area(self.screensize[0] / 2, scale[0]/2)
             min_y, max_y = functions.area(self.screensize[1] / 2, scale[1]/2)
 
-            self.flock.add_obstacle([self.screensize[0]/2.,self.screensize[1]/2.], scale=scale, outside=self.outside)
+            self.flock.add_obstacle([self.screensize[0]/2.,self.screensize[1]/2.], scale=scale, outside=self.outside, convex=self.convex)
 
         #weird bug but need to adjust the sie when the flock is inside, smth with scale funciton is different
         if not self.outside:
@@ -77,7 +86,7 @@ class Simulation():
     def run(self):
         self.initialize()
         while self.running:
-            self.screen.fill(SIM_BACKGROUND)
+            self.screen.fill(self.sim_background)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False

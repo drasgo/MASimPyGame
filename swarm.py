@@ -42,8 +42,8 @@ class Flock(pygame.sprite.Sprite):
         # velocity = velocity * np.array([np.cos(angle), np.sin(angle)])
         self.all_boids.add(Boid(pos=np.array(pos))) #initialize all velocities to the same value
 
-    def add_obstacle(self,pos, scale, outside):
-        self.obstacles.add(Obstacle(pos=np.array(pos), scale=scale, outside = outside))
+    def add_obstacle(self, pos, scale, outside, convex):
+        self.obstacles.add(Obstacle(pos=np.array(pos), scale=scale, outside = outside, convex=convex))
 
     def wander(self):
         """Make all boids wander around randomly."""
