@@ -171,7 +171,8 @@ class Flock(pygame.sprite.Sprite):
                         elif y > y_ob:
                             boid.pos[1] -= y_col*MOVE
 
-                    boid.v = (functions.rotate(functions.normalize(boid.v))*5.)
+                    #unit vector which is rotated as compared to the original velocity times the previous magnitude
+                    boid.v = (functions.rotate(functions.normalize(boid.v))*functions.norm(boid.v)) #5.
                     boid.steering = np.zeros(2)
 
 
@@ -188,8 +189,9 @@ class Flock(pygame.sprite.Sprite):
                 boid.pos[1]=0.
 
     def update(self):
-        if self.wander_selected: self.wander()
         if self.implement_obstacle: self.avoid_obstacle()
+        #it matters where the obstacle avoidance is places as it teleports the agent and changes the direction of its velocity
+        if self.wander_selected: self.wander()
         if self.align_selected: self.align()
         if self.cohesion_selected: self.cohesion()
         if self.separate_selected: self.separate()

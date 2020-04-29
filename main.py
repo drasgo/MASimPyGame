@@ -13,7 +13,7 @@ number_boids = 50
 if __name__ == "__main__":
     pygame.init()
     sim = Simulation(num_boids=number_boids, screen_size=screen_size,
-                     obstacle=True, outside=True,
+                     obstacle=True, outside=False,
                      wander=True,
                      align=True,
                      separate=True,
