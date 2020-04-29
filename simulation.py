@@ -2,13 +2,16 @@ import pygame
 import random
 from swarm import Flock
 import functions
+import time
+import numpy as np
 
 
 SIM_BACKGROUND = pygame.Color('black')
 
 class Simulation():
     def __init__(self, num_boids, screen_size, obstacle=False, outside=False,
-                 wander=True, align=True,separate=True, cohesion=True):
+                 wander=True, align=True,separate=True, cohesion=True,
+                 display_screen = True):
 
         self.num_boids = num_boids
         self.flock = Flock(screen_size, obstacle, wander=wander, align=align, separate=separate, cohesion =cohesion)
@@ -19,6 +22,7 @@ class Simulation():
         self.screen = pygame.display.set_mode(screen_size)
         self.barriers = obstacle
         self.outside = outside
+        self.display_screen = display_screen
 
     def display(self):
         for sprite in self.to_display:
@@ -78,11 +82,8 @@ class Simulation():
                 if event.type == pygame.QUIT:
                     self.running = False
 
-
             self.update()
-            self.display()
-            pygame.display.flip()
-
-
-
+            if self.display_screen:
+                self.display()
+                pygame.display.flip()
 
