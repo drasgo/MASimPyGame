@@ -3,8 +3,19 @@ import numpy as np
 import functions
 import random
 
-BOID_MAX_SPEED = 8.
-BOID_MAX_FORCE = 10.
+BOID_MAX_SPEED = 4.
+BOID_MAX_FORCE = 5.
+
+#Wander settings
+WANDER_RADIUS = 3.0
+WANDER_DIST = 5.0
+WANDER_ANGLE = 1.0
+
+#weights
+COHESION_WEIGHT = 10.9 #10.
+ALIGNMENT_WEIGHT = 3.5
+SEPERATION_WEIGHT = 7.5
+WANDER_WEIGHT=1.3 #1.1
 
 class Boid(pygame.sprite.Sprite):
 
@@ -19,7 +30,6 @@ class Boid(pygame.sprite.Sprite):
         self.image = self.base_image
         self.mask = pygame.mask.from_surface(self.image)
         self.mask = self.mask.scale((12, 10))
-        # print('size agent', self.mask.get_size())
 
         self.pos = pos
         self.v = v
@@ -52,13 +62,87 @@ class Boid(pygame.sprite.Sprite):
         self.image = pygame.transform.rotate(self.base_image, angle) #rotates the image
         self.rect = self.image.get_rect(center=self.rect.center)
 
-    #
-    # def steer_new(self, force):
-    #     self.steering += force
-    #
-    # def steer_normalize(self, weight_sum):
-    #     self.steering /= weight_sum
-    #     self.steering = functions.scalevector(self.steering, random.randrange(averagebirdspeed-lowerbound,averagebirdspeed+upperbound))
+    def speedvector(self):
+        angle = np.pi * (2 * np.random.rand() - 1)
+        velocity=[random.randrange(1, BOID_MAX_SPEED + 1) * functions.plusminus(),
+         random.randrange(1, BOID_MAX_SPEED + 1) * functions.plusminus()]
+        velocity *= np.array([np.cos(angle), np.sin(angle)])
+        return velocity
+
+
+    #actions
+    def avoid_obstacle(self, obstacle_center, obstacle_outside):
+        """
+        Function to avoid obstacles
+        need to take into account whether agents inside/outside the obstacle
+        moves the agent away from the boarder by distance equivalent to its size
+        :param obstacle_center: tuple (int,int), the center coordinates of the obstacle
+        :param obstacle_outside: boolean, defines whether the agents are inside or outside of the obstacle
+        """
+        x,y = self.mask.get_size() #get the size of the boid
+        x_ob, y_ob = obstacle_center
+
+        if obstacle_outside: #agents outside the obstacle
+            if self.pos[0] >= x_ob:
+                self.pos[0] += x
+            else:
+                self.pos[0] -= x
+
+            if self.pos[1] >= y_ob:
+                self.pos[1] += y
+            else:
+                self.pos[1] -= y
+        else:  #agents inside the obstacle:
+            if self.pos[0] <= x_ob:
+                self.pos[0] +=x
+            else:
+                self.pos[0] -=x
+
+            if self.pos[1] <= y_ob:
+                self.pos[1] += y
+            else:
+                self.pos[1] -= y
+
+        #adjust the velocity by rotating it around
+        self.v = (functions.rotate(functions.normalize(self.v)) * functions.norm(self.v))  # 5.
+
+
+    def wander(self):
+        """
+        Function to make the agents to perform random movement
+        """
+        rands = 2 * np.random.rand() - 1
+        cos = np.cos(self.wandering_angle)
+        sin = np.sin(self.wandering_angle)
+        n_v = functions.normalize(self.v)
+        circle_center = n_v * WANDER_DIST
+        displacement = np.dot(np.array([[cos, -sin], [sin, cos]]), n_v * WANDER_RADIUS)
+        wander_force = circle_center + displacement
+        self.steer(wander_force * WANDER_WEIGHT)
+        self.wandering_angle += WANDER_ANGLE * rands
+
+
+    def align(self, neighbor_force):
+        """
+        Function to align the agent in accordance to neighbor velocity
+        :param neighbor_force: np.array(x,y)
+        """
+        self.steer(functions.normalize(neighbor_force-self.v)*ALIGNMENT_WEIGHT)
+
+    def cohesion(self, neighbor_center):
+        """
+        Function to move the agent towards the center of mass of its neighbors
+        :param neighbor_rotation: np.array(x,y)
+        """
+        force = neighbor_center - self.pos
+        self.steer(functions.normalize(force - self.v)*COHESION_WEIGHT)
+
+    def separate(self, separate_force):
+        """
+        Function to separate agents from being too close
+        :param separate_force: np.array(x,y)
+        """
+        self.steer(functions.normalize(separate_force) * SEPERATION_WEIGHT)
 
 
     def steer(self, force, alt_max=None): #here should all the forces come together
@@ -76,18 +160,12 @@ class Boid(pygame.sprite.Sprite):
         self.pos += self.v
 
 
-    def display(self, screen, debug=False):
+    def display(self, screen):
         screen.blit(self.image, self.rect)
 
     def reset_frame(self):
         self.steering = np.zeros(2)
 
-    def speedvector(self):
-        angle = np.pi * (2 * np.random.rand() - 1)
-        velocity=[random.randrange(1, BOID_MAX_SPEED + 1) * functions.plusminus(),
-         random.randrange(1, BOID_MAX_SPEED + 1) * functions.plusminus()]
-        velocity *= np.array([np.cos(angle), np.sin(angle)])
-        return velocity
 
 
 class Obstacle(pygame.sprite.Sprite):

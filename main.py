@@ -15,7 +15,7 @@ Code for flocking simulation in pygame with/without hallow obstacle
 
 screen_width, screen_height = 1000, 1000
 screen_size = (screen_width, screen_height)
-number_boids = 50 #100
+number_boids = 30 #100
 
 if __name__ == "__main__":
     pygame.init()
@@ -26,5 +26,5 @@ if __name__ == "__main__":
                      separate=True,
                      cohesion = True,
                      display_screen = True,
-                     convex = True)
+                     convex = False)
     sim.run()

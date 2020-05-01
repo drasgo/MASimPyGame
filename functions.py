@@ -33,7 +33,7 @@ def truncate(vector, max_length):
     """Truncate the length of a vector to a maximum value."""
     n = norm(vector)
     if n > max_length:
-        return normalize(vector, pre_computed=n) * max_length
+        return normalize(vector,) * max_length
     else:
         return vector
 
@@ -46,17 +46,14 @@ def norm2(vector):
     return vector[0] * vector[0] + vector[1] * vector[1]
 
 
-def normalize(vector, pre_computed=None):
-    """Return the normalized version of a vector.
-
-    Parameters
-    ----------
-    vector : np.array
-    pre_computed : float, optional
-        The pre-computed norm for optimization. If not given, the norm
-        will be computed.
+def normalize(vector):
     """
-    n = pre_computed if pre_computed is not None else norm(vector)
+    Function to normalize a vector
+    ----------
+    param vector : np.array
+    return: unit vector
+    """
+    n = norm(vector)
     if n < 1e-13:
         return np.zeros(2)
     else:
