@@ -15,7 +15,7 @@ number_agents = 30
 
 #choose to display an obstacle, its shape, and whether to position agents inside or outside of the obstacle
 obstacle_present = True
-obstacle_convex = False
+obstacle_convex = True
 agents_outside = False
 
 

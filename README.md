@@ -30,16 +30,16 @@ Here are some flocking examples:
 
 Boids outside a circle object
 
-![Output sample](https://github.com/IlzeAmandaA/BoidsPyGame/blob/master/boids_outside.gif)
+![Output sample](https://github.com/IlzeAmandaA/BoidsPyGame/blob/master/gifs/boids_outside.gif)
 
 
 Boids inside a circle object
 
 
-![Output sample](https://github.com/IlzeAmandaA/BoidsPyGame/blob/master/boids_inside.gif)
+![Output sample](https://github.com/IlzeAmandaA/BoidsPyGame/blob/master/gifs/boids_inside.gif)
  
 
 Boids inside a convex object
 
-![Output sample](https://github.com/IlzeAmandaA/BoidsPyGame/blob/master/convexgif.gif)
+![Output sample](https://github.com/IlzeAmandaA/BoidsPyGame/blob/master/gifs/convexgif.gif)
 

@@ -21,7 +21,7 @@ class Obstacle(pygame.sprite.Sprite):
 
     def __init__(self, pos=None, scale=None, outside=False, convex_shape=False):
         super(Obstacle,self).__init__()
-        filename = 'redd.png' if not convex_shape else 'convex.png'
+        filename = 'images/redd.png' if not convex_shape else 'images/convex.png'
         self.image, self.rect = functions.image_with_rect(filename, scale)
         self.mask = pygame.mask.from_surface(self.image)
         self.pos = pos if pos is not None else np.zeros(2)

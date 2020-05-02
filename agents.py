@@ -33,7 +33,7 @@ class Boid(pygame.sprite.Sprite):
         if v is None:
             v = self.speedvector()
 
-        self.base_image, self.rect = functions.image_with_rect('normal-boid.png', [10,8])
+        self.base_image, self.rect = functions.image_with_rect('images/normal-boid.png', [10,8])
         self.image = self.base_image
         self.mask = pygame.mask.from_surface(self.image)
         self.mask = self.mask.scale((12, 10))
