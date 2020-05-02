@@ -22,6 +22,9 @@ If you want to change the behavior of the agents, then you can adjust the global
 If you want to change the shape of the obstacles, choose a different file to load in the `physical_objects.py` file.  
 
 Have fun! 
+
+
+## Examples
 Here are some flocking examples: 
 
 Boids outside a circle object
