@@ -1,30 +1,26 @@
 from simulation import Simulation
-import os
-
-#if you want to run the game without a visuals:
-#set display = False
-# os.environ['SDL_VIDEODRIVER']='dummy'
-
 import pygame
 
 
 """
-Code for flocking simulation in pygame with/without hallow obstacle 
+Code for multi-agent simulation in PyGame with/without physical objects in the environment
 """
 
-
+#define the screen settings
 screen_width, screen_height = 1000, 1000
 screen_size = (screen_width, screen_height)
-number_boids = 30 #100
+
+#define the number of agents
+number_agents = 30
+
+#choose to display an obstacle, its shape, and whether to position agents inside or outside of the obstacle
+obstacle_present = True
+obstacle_convex = False
+agents_outside = False
+
 
 if __name__ == "__main__":
     pygame.init()
-    sim = Simulation(num_boids=number_boids, screen_size=screen_size,
-                     obstacle=True, outside=False,
-                     wander=True,
-                     align=True,
-                     separate=True,
-                     cohesion = True,
-                     display_screen = True,
-                     convex = False)
+    sim = Simulation(num_agents=number_agents, screen_size=screen_size,
+                     obstacle=obstacle_present, outside=agents_outside, convex = obstacle_convex)
     sim.run()

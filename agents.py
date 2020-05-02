@@ -3,6 +3,13 @@ import numpy as np
 import functions
 import random
 
+"""
+Python code for agent class definition
+Each agent class contains the agent's properties and possible actions to execute based on environmental input 
+Currently implemented a Boid class 
+"""
+
+#velocity speed and force
 BOID_MAX_SPEED = 4.
 BOID_MAX_FORCE = 5.
 
@@ -11,11 +18,11 @@ WANDER_RADIUS = 3.0
 WANDER_DIST = 5.0
 WANDER_ANGLE = 1.0
 
-#weights
-COHESION_WEIGHT = 10.9 #10.
+#weights for velocity forces
+COHESION_WEIGHT = 10.9
 ALIGNMENT_WEIGHT = 3.5
 SEPERATION_WEIGHT = 7.5
-WANDER_WEIGHT=1.3 #1.1
+WANDER_WEIGHT=1.3
 
 class Boid(pygame.sprite.Sprite):
 
@@ -166,20 +173,3 @@ class Boid(pygame.sprite.Sprite):
     def reset_frame(self):
         self.steering = np.zeros(2)
 
-
-
-class Obstacle(pygame.sprite.Sprite):
-
-    def __init__(self, pos=None, scale=None, outside=False, convex=False):
-        super(Obstacle,self).__init__()
-        filename = 'redd.png' if not convex else 'convex.png'
-        self.image, self.rect = functions.image_with_rect(filename, scale) #'redd.png'
-        self.mask = pygame.mask.from_surface(self.image)
-        self.pos = pos if pos is not None else np.zeros(2)
-        self.rect = self.image.get_rect(center=self.pos)
-        self.outside = outside
-
-
-
-    def display(self, screen):
-        screen.blit(self.image ,self.rect)

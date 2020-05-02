@@ -1,30 +1,36 @@
 import pygame
-import random
 from swarm import Flock
+from physical_objects import Objects
 import functions
-import time
-import numpy as np
 
+"""
+Code for initializing the simulation, as well as executing it 
+"""
 
-# SIM_BACKGROUND = pygame.Color('gray21') #'black'
 
 class Simulation():
-    def __init__(self, num_boids, screen_size, obstacle=False, outside=False,
-                 wander=True, align=True,separate=True, cohesion=True,
-                 display_screen = True, convex=True):
+    def __init__(self, num_agents, screen_size, obstacle=False, outside=False, convex=True):
 
-        self.num_boids = num_boids
-        self.flock = Flock(screen_size, obstacle, wander=wander, align=align, separate=separate, cohesion =cohesion)
+        # environment settings
+        self.obstacles_present = obstacle
+        self.outside = outside
+        self.convex = convex
+
+        #display settings
         self.screensize = screen_size
+        self.screen = pygame.display.set_mode(screen_size)
+        self.sim_background = self.set_background()
+
+        #swarm settings
+        self.num_agents = num_agents
+        self.swarm = Flock(screen_size)
+        self.objects = Objects()
+
+        #update
         self.to_update = pygame.sprite.Group()
         self.to_display = pygame.sprite.Group()
         self.running = True
-        self.screen = pygame.display.set_mode(screen_size)
-        self.barriers = obstacle
-        self.outside = outside
-        self.display_screen = display_screen
-        self.convex = convex
-        self.sim_background = self.set_background()
+
 
     def set_background(self):
         if self.convex:
@@ -35,56 +41,62 @@ class Simulation():
 
     def display(self):
         for sprite in self.to_display:
-            sprite.display(self.screen) #loop all the objects stored in to_display, access their display
-
-    def generate_coordinates(self):
-        return [float(random.randrange(0, self.screensize[0])), float(random.randrange(0,self.screensize[1]))]
+            sprite.display(self.screen)
 
     def update(self):
         self.to_update.update()
 
+
     def initialize(self):
-        min_x, max_x=None, None
-        min_y, max_y = None, None
-        if self.barriers:
+
+        #add obstacle/-s to the environment if present
+        if self.obstacles_present:
+            object_loc = [self.screensize[0]/2.,self.screensize[1]/2.]
+
             if self.outside:
                 scale = [300,300]
             else:
                 scale = [700,700]
-            min_x, max_x = functions.area(self.screensize[0] / 2, scale[0]/2)
-            min_y, max_y = functions.area(self.screensize[1] / 2, scale[1]/2)
 
-            self.flock.add_obstacle([self.screensize[0]/2.,self.screensize[1]/2.], scale=scale, outside=self.outside, convex=self.convex)
+            self.objects.add_obstacle(object_loc, scale=scale, outside=self.outside, convex=self.convex)
 
-        #weird bug but need to adjust the sie when the flock is inside, smth with scale funciton is different
-        if not self.outside:
-            max_x -=150
-            max_y -=150
-            min_x += 150
-            min_y += 150
+            min_x, max_x = functions.area(object_loc[0], scale[0])
+            min_y, max_y = functions.area(object_loc[1], scale[1])
 
-        for boid in range(self.num_boids): #add boids to the environment
-            coordinates = self.generate_coordinates() #generate coordinates within the scope of the screen
-            if self.barriers:
+
+        #add obstacles to the swarm for easier functionality
+        self.swarm.set_obstacles(self.objects.obstacles)
+
+
+        #add agents to the environment
+        for agent in range(self.num_agents):
+            coordinates = functions.generate_coordinates(self.screensize)
+
+            #if obstacles present re-estimate the corrdinates
+            if self.obstacles_present:
                 if self.outside:
                     while coordinates[0]<=max_x and coordinates[0]>=min_x and coordinates[1]<=max_y and coordinates[1]>=min_y:
-                        coordinates = self.generate_coordinates()
+                        coordinates = functions.generate_coordinates(self.screensize)
                 else:
                     while coordinates[0]>=max_x or coordinates[0]<=min_x or coordinates[1]>=max_y or coordinates[1]<=min_y:
-                        coordinates = self.generate_coordinates()
-            self.flock.add_boid(coordinates)
+                        coordinates = functions.generate_coordinates(self.screensize)
 
+            self.swarm.add_agents(coordinates)
 
-        self.to_update = pygame.sprite.Group(self.flock)
+        #add all agents/objects to the update
+        self.to_update = pygame.sprite.Group(self.swarm)
 
-
+        #display all the agents/objects
         self.to_display = pygame.sprite.Group(
             self.to_update
         )
 
 
     def run(self):
+        #initialize the agent and obstacle positions within the environment
         self.initialize()
+
+        #the simulation loop, infinite until the user exists the simulation
         while self.running:
             self.screen.fill(self.sim_background)
             for event in pygame.event.get():
@@ -92,7 +104,6 @@ class Simulation():
                     self.running = False
 
             self.update()
-            if self.display_screen:
-                self.display()
-                pygame.display.flip()
+            self.display()
+            pygame.display.flip()
 

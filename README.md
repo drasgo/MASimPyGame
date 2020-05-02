@@ -2,28 +2,26 @@
 Implementation of flocking in pygame with hallow objects in the environment 
 
 ## Contents
-1. `main.py` The main file to execute, can specify here:
-    - the number of boids
+1. `main.py` The main file to execute, can specify here the general simulation settings:
+    - the number of agents
     - screen size
-    - forces to execute (wander, align, separate, cohere) 
     - obstacle presence
     - obstacle type 
-    - boids inside or outside the obstacle
-    - to display screen or not 
-    
-2. `simulation.py` Contains the main execution loop: the game is initialized and ran until the user exits the window
-3. `swarm.py` Defines the swarm behavior (weights for each force applied), as well as the update sequence
-4. `agents.py` Defines the properties of boids (mass of a boid) and obstacles. 
-5. `functions.py` Contains useful vector transformation functions 
+    - agents inside or outside the obstacle
+ 
+2. `simulation.py` Contains the main execution loop: the simulation is initialized and ran until the user exits the window. 
+3. `swarm.py` Contains the possible swarm classes. Currently, only flocking implemented. 
+4. `agents.py` Containts the possible agent types to be utilized by the swarm classes. Defines the agent properties and actions
+5. `physical_objects.py` Contains a main object class in which a specific obstacle type can be loaded 
+6. `functions.py` Contains useful vector transformation functions 
 
 ## How it works
-Simply run the main.py file from terminal 
-
-## Bugs
-Sometimes the agent gets stuck at the corners of the object --> still to be fully fixed 
+Simply run the main.py file from terminal.
+If you want to change the behavior of the agents, then you can adjust the global variables defined within the `agents.py` file. 
+If you want to change the shape of the obstacles, choose a different file to load in the `physical_objects.py` file.  
 
 Have fun! 
-Here is how it looks:
+Here are some flocking examples: 
 
 Boids outside a circle object
 
