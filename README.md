@@ -1,5 +1,6 @@
 # BoidsPyGame
-Implementation of flocking in pygame with hallow objects in the environment 
+Implementation of multi-agent simulations in PyGame 
+Current example based on the flocking phenomena 
 
 ## Contents
 1. `main.py` The main file to execute, can specify here the general simulation settings:
