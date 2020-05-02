@@ -1,5 +1,6 @@
 # BoidsPyGame
-Implementation of multi-agent simulations in PyGame 
+Implementation of multi-agent simulations in PyGame.
+
 Current example based on the flocking phenomena 
 
 ## Contents
