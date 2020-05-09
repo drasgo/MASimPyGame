@@ -7,20 +7,36 @@ Current example based on the flocking phenomena
 1. `main.py` The main file to execute, can specify here the general simulation settings:
     - the number of agents
     - screen size
-    - obstacle presence
-    - obstacle type 
-    - agents inside or outside the obstacle
+    - swarm type (which experiment to run)
+
  
-2. `simulation.py` Contains the main execution loop: the simulation is initialized and ran until the user exits the window. 
-3. `swarm.py` Contains the possible swarm classes. Currently, only flocking implemented. 
-4. `agents.py` Containts the possible agent types to be utilized by the swarm classes. Defines the agent properties and actions
-5. `physical_objects.py` Contains a main object class in which a specific obstacle type can be loaded 
-6. `functions.py` Contains useful vector transformation functions 
+2. `simulation.py` Contains the main execution loop: the simulation is initialized and ran until the user exits the window.
+
+3. In the folder experiments, you can find the general multi-agent classes shared across all experiments:
+    - `swarm.py` General swarm properties and updates
+    - `agent.py` General agent properties and updates
+    - `physical_objects.py` General obstacle properties
+    - `helperfunctions.py` General vector transformation functions 
+
+Each experiment is defined in a separate folder: flocking, aggregation and etc.
+
+5. Flocking folder contains detailed characteristics for flocking behavior
+    - `flock.py` defines the environment of the flock, as well as specific flocking related functions
+    - `boid.py` defines a boid, with its possible actions and update rule 
+    - images Folder where the images for the environment and boid design is stored 
+    
+6. Aggregation folder contains detailed characteristics for aggregation behavior
+   
+    TO BE WRITTEN BY ANDRE
+    - `aggreagte.py`
+    - `cockroach.py`
+
 
 ## How it works
-Simply run the main.py file from terminal.
-If you want to change the behavior of the agents, then you can adjust the global variables defined within the `agents.py` file. 
-If you want to change the shape of the obstacles, choose a different file to load in the `physical_objects.py` file.  
+Simply run the main.py file from terminal by specifying the type of swarm to use, and the number of agents 
+
+If you want the specific behavior of the given swarm, look into the corresponding swarm folder, and adjust the global variables 
+
 
 Have fun! 
 

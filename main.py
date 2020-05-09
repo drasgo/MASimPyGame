@@ -13,14 +13,12 @@ screen_size = (screen_width, screen_height)
 #define the number of agents
 number_agents = 30
 
-#choose to display an obstacle, its shape, and whether to position agents inside or outside of the obstacle
-obstacle_present = True
-obstacle_convex = True
-agents_outside = False
+#choose swarm type
+swarm = 'Flock'
 
 
 if __name__ == "__main__":
     pygame.init()
     sim = Simulation(num_agents=number_agents, screen_size=screen_size,
-                     obstacle=obstacle_present, outside=agents_outside, convex = obstacle_convex)
+                     swarm_type=swarm)
     sim.run()
