@@ -35,7 +35,7 @@ Each experiment is defined in a separate folder: flocking, aggregation and etc.
 ## How it works
 Simply run the main.py file from terminal by specifying the type of swarm to use, and the number of agents 
 
-If you want the specific behavior of the given swarm, look into the corresponding swarm folder, and adjust the global variables 
+If you want to change the specific behavior of the given swarm, look into the corresponding swarm folder, and adjust the global variables 
 
 
 Have fun! 
