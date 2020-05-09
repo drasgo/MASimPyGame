@@ -20,12 +20,12 @@ Current example based on the flocking phenomena
 
 Each experiment is defined in a separate folder: flocking, aggregation and etc.
 
-5. Flocking folder contains detailed characteristics for flocking behavior
+4. Flocking folder contains detailed characteristics for flocking behavior
     - `flock.py` defines the environment of the flock, as well as specific flocking related functions
     - `boid.py` defines a boid, with its possible actions and update rule 
     - images Folder where the images for the environment and boid design is stored 
     
-6. Aggregation folder contains detailed characteristics for aggregation behavior
+5. Aggregation folder contains detailed characteristics for aggregation behavior
    
     TO BE WRITTEN BY ANDRE
     - `aggreagte.py`
