@@ -1,15 +1,13 @@
 import numpy as np
 from experiments.flocking.boid import Boid
-from experiments.swarm import Swarm
-from experiments import helperfunctions
-from experiments.physical_objects import Objects
+from simulation.swarm import Swarm
+from simulation import helperfunctions
+from simulation.objects import Objects
 
 """
 Specific flock properties, and flocking environment definition 
 """
 
-#General settings for a floccking
-RADIUS_VIEW=200
 
 #Define the environment
 OBSTACLES = True
@@ -78,26 +76,19 @@ class Flock(Swarm): #also access methods from the super class Swarm
         return neighbor_sum_pos
 
 
-    def find_neighbor_seperation(self,neighbors,boid):
-        seperate = np.zeros(2)
+    def find_neighbor_separation(self,boid,neighbors):
+        separate = np.zeros(2)
         for idx in neighbors:
             neighbor_pos = list(self.agents)[idx].pos
             difference = boid.pos - neighbor_pos
             difference /= helperfunctions.dist(boid.pos, neighbor_pos)
-            seperate += difference
-        return seperate
+            separate += difference
+        return separate
 
     def update(self):
         for boid in self.agents:
-            neighbors, count = self.find_neighbors(boid, RADIUS_VIEW)
-            if count:
-                align_force = self.find_neighbor_velocity(neighbors) / count
-                cohesion_force = self.find_neighbor_center(neighbors) / count
-                separate_force = self.find_neighbor_seperation(neighbors, boid) / count
-            else:
-                align_force, cohesion_force, separate_force = (0.,0.), (0.,0.), (0.,0.)
-
-            boid.update_actions(self.obstacles, self.object_loc, align_force, cohesion_force, separate_force)
+            boid.update_actions(self.obstacles, self.object_loc,
+                                self.find_neighbors, self.find_neighbor_velocity, self.find_neighbor_center, self.find_neighbor_separation)
 
         self.remain_in_screen()
 

@@ -8,25 +8,26 @@ Current example based on the flocking phenomena
     - the number of agents
     - screen size
     - swarm type (which experiment to run)
-
- 
-2. `simulation.py` Contains the main execution loop: the simulation is initialized and ran until the user exits the window.
-
-3. In the folder experiments, you can find the general multi-agent classes shared across all experiments:
+    
+2. **simulation folder** Contains the general simulation design, as well as general multi-agent classes with properties that can be shared across the experiments. 
+    - `simulation.py` The main execution loop: the simulation is initialized and ran until the user exits the window.
     - `swarm.py` General swarm properties and updates
     - `agent.py` General agent properties and updates
     - `physical_objects.py` General obstacle properties
     - `helperfunctions.py` General vector transformation functions 
 
-Each experiment is defined in a separate folder: flocking, aggregation and etc.
+3. **experiments folder** Contains separate folder for each experiment:
+    - flocking 
+    - aggregation
 
-4. Flocking folder contains detailed characteristics for flocking behavior
+
+4. **flocking folder** Contains detailed characteristics of a flocking behavior
     - `flock.py` defines the environment of the flock, as well as specific flocking related functions
     - `boid.py` defines a boid, with its possible actions and update rule 
-    - images Folder where the images for the environment and boid design is stored 
+    - **images folder** where the images for the environment and boid design is stored 
     
-5. Aggregation folder contains detailed characteristics for aggregation behavior
-   
+5. **aggregation folder** Contains detailed characteristics for aggregation behavior
+
     TO BE WRITTEN BY ANDRE
     - `aggreagte.py`
     - `cockroach.py`

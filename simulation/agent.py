@@ -1,6 +1,6 @@
 import pygame
 import numpy as np
-from experiments import helperfunctions
+from simulation import helperfunctions
 import random
 
 """

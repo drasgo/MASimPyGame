@@ -1,4 +1,4 @@
-from simulation import Simulation
+from simulation.simulation import Simulation
 import pygame
 
 

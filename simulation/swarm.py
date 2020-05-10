@@ -1,5 +1,5 @@
 import pygame
-from experiments import helperfunctions
+from simulation import helperfunctions
 
 """
 General swarm class that defines general swarm properties, which are common across different swarm types

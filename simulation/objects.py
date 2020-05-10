@@ -1,6 +1,6 @@
 import pygame
 import numpy as np
-from experiments import helperfunctions
+from simulation import helperfunctions
 
 """
 General Object class to load images in the environment 

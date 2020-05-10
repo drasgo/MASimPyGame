@@ -1,13 +1,16 @@
 import pygame
 import numpy as np
-from experiments import helperfunctions
-from experiments.agent import Agent
+from simulation import helperfunctions
+from simulation.agent import Agent
 
 """
 Specific boid properties and helperfunctions 
 """
 #boid mass
 MASS = 30
+
+#Viewing angle
+RADIUS_VIEW=200
 
 #velocity force
 BOID_MAX_FORCE = 5.
@@ -30,18 +33,34 @@ class Boid(Agent):
         self.mass = mass
         self.wandering_angle = helperfunctions.randrange(-np.pi, np.pi) #set a random wandering angle
 
-    def update_actions(self, obstacles, object_loc, align, cohere, separate):
+    def update_actions(self, obstacles, object_loc,
+                       find_neighbors, velocity, mass_center, separation):
+
+        #avoid any obstacles in the environment
         for obstacle in obstacles:
             collide = pygame.sprite.collide_mask(self, obstacle)
             if bool(collide):
                 self.avoid_obstacle(obstacle.pos, object_loc)
 
 
-        total_force = self.wander() * WANDER_WEIGHT\
-                + self.align(align) * ALIGNMENT_WEIGHT \
-                + self.cohesion(cohere) * COHESION_WEIGHT\
-                + self.separate(separate) * SEPERATION_WEIGHT
+        #find all the neighbors of a boid based on its radius view
+        neighbors, count = find_neighbors(self, RADIUS_VIEW)
 
+        #if there are neighbors, estimate the influence of their forces
+        if count:
+            align_force = velocity(neighbors) / count
+            cohesion_force = mass_center(neighbors) / count
+            separate_force = separation(self,neighbors) / count
+        else:
+            align_force, cohesion_force, separate_force = (0., 0.), (0., 0.), (0., 0.)
+
+        #combine the vectors in one
+        total_force = self.wander() * WANDER_WEIGHT\
+                + self.align(align_force) * ALIGNMENT_WEIGHT \
+                + self.cohesion(cohesion_force) * COHESION_WEIGHT\
+                + self.separate(separate_force) * SEPERATION_WEIGHT
+
+        #adjust the direction of the boid
         self.steering += helperfunctions.truncate(total_force / self.mass, BOID_MAX_FORCE)
 
     #actions
@@ -103,7 +122,7 @@ class Boid(Agent):
         Function to align the agent in accordance to neighbor velocity
         :param neighbor_force: np.array(x,y)
         """
-        return helperfunctions.normalize(neighbor_force-self.v)
+        return helperfunctions.normalize(neighbor_force - self.v)
         # self.steer(helperfunctions.normalize(neighbor_force-self.v)*ALIGNMENT_WEIGHT)
 
     def cohesion(self, neighbor_center):
