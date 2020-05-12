@@ -6,8 +6,6 @@ from experiments.flocking.flock import Flock
 General simulation pipeline, suitable for all experiments 
 """
 
-ITER=10000 #define
-
 class Simulation():
     def __init__(self, num_agents, screen_size, swarm_type, iterations):
 
