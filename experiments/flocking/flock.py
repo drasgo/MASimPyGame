@@ -17,14 +17,13 @@ CONVEX = True
 class Flock(Swarm): #also access methods from the super class Swarm
     def __init__(self, screen_size):
         super(Flock, self).__init__(screen_size)
-        self.objects = Objects()
         self.object_loc = OUTSIDE
 
-    def add_agents(self, pos):
-        super(Flock,self).add_agent(Boid(pos=np.array(pos),v=None))
+    def add_agents(self, pos, flock):
+        super(Flock,self).add_agent(Boid(pos=np.array(pos),v=None, flock=flock))
 
 
-    def initialize(self, num_agents):
+    def initialize(self, num_agents, swarm):
 
         #add obstacle/-s to the environment if present
         if OBSTACLES:
@@ -37,14 +36,11 @@ class Flock(Swarm): #also access methods from the super class Swarm
 
             filename = 'experiments/flocking/images/convex.png' if CONVEX else 'experiments/flocking/images/redd.png'
 
-            self.objects.add_obstacle(file= filename, pos=object_loc, scale=scale)
+            self.objects.add_object(file= filename, pos=object_loc, scale=scale, type='obstacle')
 
             min_x, max_x = helperfunctions.area(object_loc[0], scale[0])
             min_y, max_y = helperfunctions.area(object_loc[1], scale[1])
 
-
-        #add obstacles to the swarm for easier functionality
-        self.obstacles = self.objects.obstacles
 
         #add agents to the environment
         for agent in range(num_agents):
@@ -59,7 +55,7 @@ class Flock(Swarm): #also access methods from the super class Swarm
                     while coordinates[0]>=max_x or coordinates[0]<=min_x or coordinates[1]>=max_y or coordinates[1]<=min_y:
                         coordinates = helperfunctions.generate_coordinates(self.screen)
 
-            self.add_agents(coordinates)
+            self.add_agents(coordinates, swarm)
 
 
     def find_neighbor_velocity(self, neighbors):
@@ -76,21 +72,19 @@ class Flock(Swarm): #also access methods from the super class Swarm
         return neighbor_sum_pos
 
 
-    def find_neighbor_separation(self,boid,neighbors):
+    def find_neighbor_separation(self,boid,neighbors): #show what works better
         separate = np.zeros(2)
         for idx in neighbors:
             neighbor_pos = list(self.agents)[idx].pos
-            difference = boid.pos - neighbor_pos
-            difference /= helperfunctions.dist(boid.pos, neighbor_pos)
-            separate += difference
+            difference = boid.pos - neighbor_pos #compute the distance vector (v_x, v_y)
+            difference /= helperfunctions.norm(difference) #normalize to unit vector with respect to its maginiture
+            separate += difference #add the influences of all neighbors up
         return separate
 
-    def update(self):
+    def update(self): #simplify by passing flock, and see whether can simply the update to one (while keeping for each agent)
         for boid in self.agents:
-            boid.update_actions(self.obstacles, self.object_loc,
-                                self.find_neighbors, self.find_neighbor_velocity, self.find_neighbor_center, self.find_neighbor_separation)
+            boid.update_actions()
 
         self.remain_in_screen()
-
         self.update_general()
 

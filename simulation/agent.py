@@ -9,6 +9,7 @@ General agent properties, which are common across all types of agents
 
 
 MAX_SPEED = 4.
+dT=1.
 
 
 #defines general agent properties
@@ -59,7 +60,7 @@ class Agent(pygame.sprite.Sprite): #super class
 
     def update(self):
         self.v = helperfunctions.truncate(self.v + self.steering, MAX_SPEED)
-        self.pos += self.v
+        self.pos += self.v * dT
 
 
     def display(self, screen):

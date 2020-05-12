@@ -21,36 +21,37 @@ WANDER_DIST = 5.0
 WANDER_ANGLE = 1.0
 
 #weights for velocity forces
-COHESION_WEIGHT = 10.9
-ALIGNMENT_WEIGHT = 3.5
-SEPERATION_WEIGHT = 7.5
+COHESION_WEIGHT = 15.9
+ALIGNMENT_WEIGHT = 2.
+SEPERATION_WEIGHT = 12.5
 WANDER_WEIGHT=1.3
 
 class Boid(Agent):
-    def __init__(self, pos, v, image='experiments/flocking/images/normal-boid.png', mass=MASS):
+    def __init__(self, pos, v, flock, image='experiments/flocking/images/normal-boid.png', mass=MASS):
         super(Boid,self).__init__(pos,v,image)
 
         self.mass = mass
         self.wandering_angle = helperfunctions.randrange(-np.pi, np.pi) #set a random wandering angle
+        self.flock = flock
 
-    def update_actions(self, obstacles, object_loc,
-                       find_neighbors, velocity, mass_center, separation):
+
+    def update_actions(self):
 
         #avoid any obstacles in the environment
-        for obstacle in obstacles:
+        for obstacle in self.flock.objects.obstacles:
             collide = pygame.sprite.collide_mask(self, obstacle)
             if bool(collide):
-                self.avoid_obstacle(obstacle.pos, object_loc)
+                self.avoid_obstacle(obstacle.pos, self.flock.object_loc)
 
 
         #find all the neighbors of a boid based on its radius view
-        neighbors, count = find_neighbors(self, RADIUS_VIEW)
+        neighbors, count = self.flock.find_neighbors(self, RADIUS_VIEW)
 
         #if there are neighbors, estimate the influence of their forces
         if count:
-            align_force = velocity(neighbors) / count
-            cohesion_force = mass_center(neighbors) / count
-            separate_force = separation(self,neighbors) / count
+            align_force = self.flock.find_neighbor_velocity(neighbors) / count
+            cohesion_force = self.flock.find_neighbor_center(neighbors) / count
+            separate_force = self.flock.find_neighbor_separation(self,neighbors)/ count
         else:
             align_force, cohesion_force, separate_force = (0., 0.), (0., 0.), (0., 0.)
 
@@ -123,7 +124,6 @@ class Boid(Agent):
         :param neighbor_force: np.array(x,y)
         """
         return helperfunctions.normalize(neighbor_force - self.v)
-        # self.steer(helperfunctions.normalize(neighbor_force-self.v)*ALIGNMENT_WEIGHT)
 
     def cohesion(self, neighbor_center):
         """
@@ -132,7 +132,6 @@ class Boid(Agent):
         """
         force = neighbor_center - self.pos
         return helperfunctions.normalize(force - self.v)
-        # self.steer(helperfunctions.normalize(force - self.v)*COHESION_WEIGHT)
 
     def separate(self, separate_force):
         """
@@ -140,6 +139,6 @@ class Boid(Agent):
         :param separate_force: np.array(x,y)
         """
         return helperfunctions.normalize(separate_force)
-        # self.steer(helperfunctions.normalize(separate_force) * SEPERATION_WEIGHT)
+
 
 

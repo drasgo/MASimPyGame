@@ -1,5 +1,6 @@
 import pygame
 from simulation import helperfunctions
+from simulation.objects import Objects
 
 """
 General swarm class that defines general swarm properties, which are common across different swarm types
@@ -12,7 +13,8 @@ class Swarm(pygame.sprite.Sprite):
         super(Swarm,self).__init__()
         self.agents = pygame.sprite.Group()
         self.screen = screen_size
-        self.obstacles = None
+        self.objects = Objects()
+
 
     def add_agent(self,agent):
         self.agents.add(agent)
@@ -43,8 +45,11 @@ class Swarm(pygame.sprite.Sprite):
             agent.update()
 
     def display(self, screen):
-        for obstacle in self.obstacles:
+        for obstacle in self.objects.obstacles:
             obstacle.display(screen)
+
+        for site in self.objects.sites:
+            site.display(screen)
 
         for agent in self.agents:
             agent.display(screen)

@@ -67,7 +67,7 @@ def truncate(vector, max_length):
     """Truncate the length of a vector to a maximum value."""
     n = norm(vector)
     if n > max_length:
-        return normalize(vector,) * max_length
+        return normalize(vector) * max_length
     else:
         return vector
 

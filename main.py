@@ -13,6 +13,10 @@ screen_size = (screen_width, screen_height)
 #define the number of agents
 number_agents = 30
 
+#choose how long to run the simulation
+#-1 : infinite, N: finite
+frames=-1
+
 #choose swarm type
 swarm = 'Flock'
 
@@ -20,5 +24,5 @@ swarm = 'Flock'
 if __name__ == "__main__":
     pygame.init()
     sim = Simulation(num_agents=number_agents, screen_size=screen_size,
-                     swarm_type=swarm)
+                     swarm_type=swarm, iterations=frames)
     sim.run()

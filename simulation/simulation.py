@@ -6,15 +6,17 @@ from experiments.flocking.flock import Flock
 General simulation pipeline, suitable for all experiments 
 """
 
+ITER=10000 #define
 
 class Simulation():
-    def __init__(self, num_agents, screen_size, swarm_type):
+    def __init__(self, num_agents, screen_size, swarm_type, iterations):
 
 
-        #display settings
+        #general settings
         self.screensize = screen_size
         self.screen = pygame.display.set_mode(screen_size)
         self.sim_background = pygame.Color('gray21')
+        self.iter = iterations
 
         #swarm settings
         self.num_agents = num_agents
@@ -38,7 +40,7 @@ class Simulation():
     def initialize(self):
 
         #initialize a swarm type specific environment
-        self.swarm.initialize(self.num_agents)
+        self.swarm.initialize(self.num_agents, self.swarm)
 
         #add all agents/objects to the update
         self.to_update = pygame.sprite.Group(self.swarm)
@@ -48,19 +50,29 @@ class Simulation():
             self.to_update
         )
 
+    def simulate(self):
+        self.screen.fill(self.sim_background)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.running = False
+
+        self.update()
+        self.display()
+        pygame.display.flip()
+
+
 
     def run(self):
         #initialize the environment and agent/obstacle positions
         self.initialize()
 
         #the simulation loop, infinite until the user exists the simulation
-        while self.running:
-            self.screen.fill(self.sim_background)
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    self.running = False
+        #finite time parameter or infinite
+        if self.iter == -1:
+            while self.running:
+                self.simulate()
+        else:
+            for i in range(self.iter):
+                self.simulate()
 
-            self.update()
-            self.display()
-            pygame.display.flip()
 
