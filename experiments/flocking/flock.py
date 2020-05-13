@@ -62,14 +62,14 @@ class Flock(Swarm): #also access methods from the super class Swarm
         neighbor_sum_v = np.zeros(2)
         for idx in neighbors:
             neighbor_sum_v += list(self.agents)[idx].v
-        return neighbor_sum_v
+        return neighbor_sum_v/len(neighbors)
 
 
     def find_neighbor_center(self, neighbors):
         neighbor_sum_pos = np.zeros(2)
         for idx in neighbors:
             neighbor_sum_pos += list(self.agents)[idx].pos
-        return neighbor_sum_pos
+        return neighbor_sum_pos/len(neighbors)
 
 
     def find_neighbor_separation(self,boid,neighbors): #show what works better
@@ -79,7 +79,7 @@ class Flock(Swarm): #also access methods from the super class Swarm
             difference = boid.pos - neighbor_pos #compute the distance vector (v_x, v_y)
             difference /= helperfunctions.norm(difference) #normalize to unit vector with respect to its maginiture
             separate += difference #add the influences of all neighbors up
-        return separate
+        return separate/len(neighbors)
 
     def update(self): #simplify by passing flock, and see whether can simply the update to one (while keeping for each agent)
         for boid in self.agents:

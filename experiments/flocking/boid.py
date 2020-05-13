@@ -7,13 +7,13 @@ from simulation.agent import Agent
 Specific boid properties and helperfunctions 
 """
 #boid mass
-MASS = 30
+MASS = 20
 
 #Viewing angle
-RADIUS_VIEW=200
+RADIUS_VIEW=150
 
 #velocity force
-BOID_MAX_FORCE = 5.
+BOID_MAX_FORCE = 9.
 
 #Wander settings
 WANDER_RADIUS = 3.0
@@ -21,9 +21,9 @@ WANDER_DIST = 5.0
 WANDER_ANGLE = 1.0
 
 #weights for velocity forces
-COHESION_WEIGHT = 15.9
+COHESION_WEIGHT = 8.
 ALIGNMENT_WEIGHT = 2.
-SEPERATION_WEIGHT = 12.5
+SEPERATION_WEIGHT = 7.
 WANDER_WEIGHT=1.3
 
 class Boid(Agent):
@@ -43,23 +43,13 @@ class Boid(Agent):
             if bool(collide):
                 self.avoid_obstacle(obstacle.pos, self.flock.object_loc)
 
-
-        #find all the neighbors of a boid based on its radius view
-        neighbors, count = self.flock.find_neighbors(self, RADIUS_VIEW)
-
-        #if there are neighbors, estimate the influence of their forces
-        if count:
-            align_force = self.flock.find_neighbor_velocity(neighbors) / count
-            cohesion_force = self.flock.find_neighbor_center(neighbors) / count
-            separate_force = self.flock.find_neighbor_separation(self,neighbors)/ count
-        else:
-            align_force, cohesion_force, separate_force = (0., 0.), (0., 0.), (0., 0.)
+        align_force, cohesion_force, separate_force = self.neighbor_forces()
 
         #combine the vectors in one
         total_force = self.wander() * WANDER_WEIGHT\
-                + self.align(align_force) * ALIGNMENT_WEIGHT \
-                + self.cohesion(cohesion_force) * COHESION_WEIGHT\
-                + self.separate(separate_force) * SEPERATION_WEIGHT
+                + align_force * ALIGNMENT_WEIGHT \
+                + cohesion_force * COHESION_WEIGHT\
+                + separate_force * SEPERATION_WEIGHT
 
         #adjust the direction of the boid
         self.steering += helperfunctions.truncate(total_force / self.mass, BOID_MAX_FORCE)
@@ -114,9 +104,22 @@ class Boid(Agent):
         wander_force = circle_center + displacement
         self.wandering_angle += WANDER_ANGLE * rands
         return wander_force
-        # self.steer(wander_force * WANDER_WEIGHT)
 
 
+    def neighbor_forces(self):
+
+        align_force, cohesion_force, separate_force = np.zeros(2), np.zeros(2), np.zeros(2)
+
+        #find all the neighbors of a boid based on its radius view
+        neighbors = self.flock.find_neighbors(self, RADIUS_VIEW)
+
+        #if there are neighbors, estimate the influence of their forces
+        if neighbors:
+            align_force = self.align(self.flock.find_neighbor_velocity(neighbors))
+            cohesion_force = self.cohesion(self.flock.find_neighbor_center(neighbors))
+            separate_force = self.flock.find_neighbor_separation(self,neighbors)
+
+        return align_force, cohesion_force, separate_force
 
     def align(self, neighbor_force):
         """
@@ -132,13 +135,6 @@ class Boid(Agent):
         """
         force = neighbor_center - self.pos
         return helperfunctions.normalize(force - self.v)
-
-    def separate(self, separate_force):
-        """
-        Function to separate agents from being too close
-        :param separate_force: np.array(x,y)
-        """
-        return helperfunctions.normalize(separate_force)
 
 
 
