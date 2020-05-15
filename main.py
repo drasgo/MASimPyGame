@@ -18,7 +18,7 @@ number_agents = 30
 frames=-1
 
 #choose swarm type
-swarm = 'Flock'
+swarm = 'Covid'
 
 
 if __name__ == "__main__":

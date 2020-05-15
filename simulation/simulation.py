@@ -1,5 +1,7 @@
 import pygame
+import sys
 from experiments.flocking.flock import Flock
+from experiments.covid.population import Population
 
 
 """
@@ -18,7 +20,16 @@ class Simulation():
 
         #swarm settings
         self.num_agents = num_agents
-        self.swarm = Flock(screen_size) if swarm_type == 'Flock' else None
+        if swarm_type == 'Flock':
+            self.swarm = Flock(screen_size)
+        elif swarm_type == 'Aggregation':
+            #self.swarm = Aggregation(screen_size)
+            pass
+        elif swarm_type == 'Covid':
+            self.swarm = Population(screen_size)
+        else:
+            print('None of the possible swarms selected')
+            sys.exit()
 
         #update
         self.to_update = pygame.sprite.Group()

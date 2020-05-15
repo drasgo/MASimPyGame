@@ -7,20 +7,34 @@ import random
 General agent properties, which are common across all types of agents 
 """
 
+#agent size
+WIDTH=10
+HEIGHT=8
 
-MAX_SPEED = 4.
+#agent maximum speed and 'duration'
+MAX_SPEED = 1.
 dT=1.
+
+
 
 
 #defines general agent properties
 class Agent(pygame.sprite.Sprite): #super class
-    def __init__(self, pos=None, v=None, image=None):
+    def __init__(self, pos=None, v=None, image=None, color=None):
         super(Agent, self).__init__()
 
-        self.base_image, self.rect = helperfunctions.image_with_rect(image, [10, 8])
-        self.image = self.base_image
-        self.mask = pygame.mask.from_surface(self.image)
-        self.mask = self.mask.scale((12, 10))
+        self.image_file = image
+        if self.image_file != None: #load image from file
+            self.base_image, self.rect = helperfunctions.image_with_rect(self.image_file, [WIDTH, HEIGHT])
+            self.image = self.base_image
+            self.mask = pygame.mask.from_surface(self.image)
+            self.mask = self.mask.scale((12, 10))
+
+        else: #draw an agent
+            self.image = pygame.Surface((WIDTH,HEIGHT), pygame.SRCALPHA)
+            self.image.fill(color)
+            self.rect = self.image.get_rect()
+            self.mask = pygame.mask.from_surface(self.image)
 
         self.steering = np.zeros(2)
         self.pos = np.zeros(2) if pos is None else pos
@@ -42,7 +56,7 @@ class Agent(pygame.sprite.Sprite): #super class
     @v.setter
     def v(self, v):
         self._v = v
-        self._rotate_image()
+        if self.image_file: self._rotate_image()
 
     def _rotate_image(self):
         """Rotate base image using the velocity and assign to image."""

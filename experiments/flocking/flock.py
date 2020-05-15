@@ -2,7 +2,6 @@ import numpy as np
 from experiments.flocking.boid import Boid
 from simulation.swarm import Swarm
 from simulation import helperfunctions
-from simulation.objects import Objects
 
 """
 Specific flock properties, and flocking environment definition 
