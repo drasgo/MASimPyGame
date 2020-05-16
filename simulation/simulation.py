@@ -84,9 +84,7 @@ class Simulation():
         #finite time parameter or infinite
         if self.iter == -1:
             while self.running:
-                # print('heloo')
                 self.simulate()
-                #
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         # The event is pushing the x button, not ctrl-c.
