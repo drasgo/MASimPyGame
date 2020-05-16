@@ -25,8 +25,18 @@ class Swarm(pygame.sprite.Sprite):
         for j, neighbor in enumerate(agents):
             if agent == neighbor:
                 continue
+            else:
+                try:
+                    type = neighbor.type
+                except:
+                    type = None
+
+            if type != None:
+                if type =='I' and helperfunctions.dist(agent.pos, neighbor.pos) < radius:
+                    neighbors.append(j)
             elif helperfunctions.dist(agent.pos, neighbor.pos) < radius:
                 neighbors.append(j)
+
         return neighbors
 
     def remain_in_screen(self):

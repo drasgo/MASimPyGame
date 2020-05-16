@@ -26,6 +26,10 @@ class Population(Swarm):
                 self.add_agents(coordinates, 'S', swarm)
 
 
+    def detect_transmittable(self, neighbors):
+        for idx in neighbors:
+            if list(self.agents)[idx].transmittable == True: #at the moment check if one is transmittable return true
+                return True
 
     def update(self): #simplify by passing flock, and see whether can simply the update to one (while keeping for each agent)
         for person in self.agents:
