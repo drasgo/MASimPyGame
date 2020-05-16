@@ -4,7 +4,7 @@ from simulation.swarm import Swarm
 from simulation import helperfunctions
 
 """
-Specific flock properties, and flocking environment definition 
+Specific flock properties, and flocking environment definition
 """
 
 
@@ -17,6 +17,17 @@ class Flock(Swarm): #also access methods from the super class Swarm
     def __init__(self, screen_size):
         super(Flock, self).__init__(screen_size)
         self.object_loc = OUTSIDE
+        self.data_points = np.array([])
+
+    def order_data_points(self):
+        order = np.array([])
+        #Sum of angles
+        for boid in self.agents:
+            order = np.append(self.data_points, np.sum(boid.steering))
+        #Modulus of angles
+        order = np.remainder(order, 2)
+        #summed up values of all agents
+        self.data_points = np.append(self.data_points, (np.sum(abs(np.diff(order))))/len(order))
 
     def add_agents(self, pos, flock):
         super(Flock,self).add_agent(Boid(pos=np.array(pos),v=None, flock=flock))
@@ -86,4 +97,4 @@ class Flock(Swarm): #also access methods from the super class Swarm
 
         self.remain_in_screen()
         self.update_general()
-
+        self.order_data_points()

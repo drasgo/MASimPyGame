@@ -2,10 +2,10 @@ import pygame
 import sys
 from experiments.flocking.flock import Flock
 from experiments.covid.population import Population
-
+import matplotlib.pyplot as plt
 
 """
-General simulation pipeline, suitable for all experiments 
+General simulation pipeline, suitable for all experiments
 """
 
 class Simulation():
@@ -59,6 +59,11 @@ class Simulation():
             self.to_update
         )
 
+    def plot_order(self, data):
+        print('Creating the plot.')
+        plt.plot(data)
+        plt.savefig('order.png')
+
     def simulate(self):
         self.screen.fill(self.sim_background)
         for event in pygame.event.get():
@@ -79,9 +84,15 @@ class Simulation():
         #finite time parameter or infinite
         if self.iter == -1:
             while self.running:
+                # print('heloo')
                 self.simulate()
+                #
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        # The event is pushing the x button, not ctrl-c.
+                        self.running = False
+                        self.plot_order(self.swarm.data_points)
         else:
             for i in range(self.iter):
                 self.simulate()
-
-
+            self.plot_order(self.swarm.data_points)
