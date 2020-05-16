@@ -12,7 +12,7 @@ WIDTH=10
 HEIGHT=8
 
 #agent maximum speed and 'duration'
-MAX_SPEED = 1.
+MAX_SPEED = 2.
 dT=1.
 
 

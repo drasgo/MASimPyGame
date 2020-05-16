@@ -12,14 +12,16 @@ MAX_FORCE= 0.4
 MASS=60
 
 #transmition and susceptibility probabilities
-P_COUGH=0.3
+P_COUGH=0.4
 P_INFECTED = 0.8
 RADIUS_VIEW=50
+TIME_TRANSMITTABLE = 800 #comparison to 1 week
+TIME_RECOVERY = 1600 #comparison to 2 weeks
 
 #colors
 RED=(255, 0, 0 )
 YELLOW= (255,255,0)
-GREEN=(0, 255, 0 )
+GREEN=(0, 0, 0 )
 
 
 class Person(Agent):
@@ -38,6 +40,8 @@ class Person(Agent):
         self.population = population
         self.mass = MASS
         self.transmittable = False
+        self.time_infected = 0.
+        self.time_to_recover = 0.
 
 
     def update_actions(self):
@@ -45,8 +49,20 @@ class Person(Agent):
         force = self.random_walk()
 
         if self.type == 'I':
-            if np.random.uniform(0, 1)<P_COUGH:
-                self.transmittable = True
+            self.time_infected += 1
+            self.time_to_recover += 1
+            if self.time_infected >= (TIME_TRANSMITTABLE+np.random.randint(100)):
+                self.transmittable = False
+            else:
+                if np.random.uniform(0, 1)<P_COUGH: #person is only infectious if they cough
+                    self.transmittable = True
+                else:
+                    self.transmittable = False
+
+            if self.time_to_recover >= (TIME_RECOVERY + np.random.randint(200)):
+                self.type = 'R'
+                self.image.fill(GREEN)
+
                 #infectious agent can transmit the disease
                 #need to implement that this transmitable state is not infinite
 
@@ -54,18 +70,13 @@ class Person(Agent):
             #find infected neighbors
             neighbors = self.population.find_neighbors(self, RADIUS_VIEW)
             if len(neighbors):
-                if self.population.detect_transmittable(self):
+                if self.population.detect_transmittable(neighbors):
                     if np.random.uniform(0, 1)<P_INFECTED:
                         self.type = 'I'
                         self.image.fill(RED)
 
 
-
-
-
-
-
-        self.steering +=  helperfunctions.truncate(self.random_walk()/self.mass, MAX_FORCE)
+        self.steering +=  helperfunctions.truncate(force/self.mass, MAX_FORCE)
 
 
     def random_walk(self):
