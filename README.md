@@ -31,6 +31,10 @@ Current example based on the flocking phenomena
     TO BE WRITTEN BY ANDRE
     - `aggreagte.py`
     - `cockroach.py`
+    
+6. **covid folder** Contains experimental set-up for modeling disease spread based on the SIR model
+    - `population.py` defines the properties of the population, such as initial infected proportion
+    - `person.py` define the properties of each individual 
 
 
 ## How it works
@@ -60,3 +64,6 @@ Boids inside a convex object
 
 ![Output sample](https://github.com/IlzeAmandaA/BoidsPyGame/blob/master/gifs/convexgif.gif)
 
+Here are simple disease spread example:
+
+![Output sample](https://github.com/IlzeAmandaA/BoidsPyGame/blob/master/gifs/covid_randomwalk.gif)
