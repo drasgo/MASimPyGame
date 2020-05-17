@@ -7,16 +7,16 @@ WANDER_RADIUS = 3.0
 WANDER_DIST = 0.5
 WANDER_ANGLE = 2.0
 
-MAX_FORCE= 0.4
+MAX_FORCE= 0.6
 
-MASS=60
+MASS=50
 
 #transmition and susceptibility probabilities
 P_COUGH=0.4
-P_INFECTED = 0.8
-RADIUS_VIEW=50
-TIME_TRANSMITTABLE = 800 #comparison to 1 week
-TIME_RECOVERY = 1600 #comparison to 2 weeks
+P_INFECTED = 0.9
+RADIUS_VIEW=20
+TIME_TRANSMITTABLE = 700 #comparison to 1 week
+TIME_RECOVERY = 1400 #comparison to 2 weeks
 
 #colors
 RED=(255, 0, 0 )

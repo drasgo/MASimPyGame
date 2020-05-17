@@ -4,7 +4,7 @@ from simulation import helperfunctions
 import numpy as np
 
 #initial condition probabilities
-INFECTED = 0.1
+INFECTED = 0.01
 
 
 class Population(Swarm):
@@ -20,7 +20,7 @@ class Population(Swarm):
         for id, agent in enumerate(range(num_agents)):
             coordinates = helperfunctions.generate_coordinates(self.screen)
 
-            if id < (int(INFECTED*num_agents)):
+            if id < (int(round(INFECTED*num_agents))):
                 self.add_agents(coordinates, 'I', swarm)
             else:
                 self.add_agents(coordinates, 'S', swarm)
