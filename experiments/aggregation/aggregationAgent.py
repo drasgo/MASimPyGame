@@ -5,14 +5,14 @@ from simulation import helperfunctions
 from simulation.agent import Agent
 
 """
-Specific the aggregation agent properties and actions 
+Specific the aggregation agent properties and actions
 """
 
 #boid mass
 MASS = 20
 
 # Agents Viewing angle
-RADIUS_VIEW = 75
+RADIUS_VIEW = 50
 
 #Wander settings
 WANDER_RADIUS = 3.0
@@ -20,8 +20,8 @@ WANDER_DIST = 5.0
 WANDER_ANGLE = 1.0
 
 # For velocity forces
-WANDER_WEIGHT=1.3
-BOID_MAX_FORCE = 9.
+WANDER_WEIGHT=0.4
+BOID_MAX_FORCE = 5.
 
 
 class aggregationAgent(Agent):
@@ -129,10 +129,10 @@ class aggregationAgent(Agent):
         assert numNeighbors >= 0
 
         baselineProbStop = 0.5
-        baselineProbLeave = 0.5
+        baselineProbLeave = 0.2
 
         jFactor = 0.02
-        lFactor = 0.04
+        lFactor = 0.03
 
         if self.wandering:
             prob = baselineProbStop + (jFactor * numNeighbors)

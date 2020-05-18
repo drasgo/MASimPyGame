@@ -13,7 +13,7 @@ Python code for aggregations implementation
 #Define the environment
 OBSTACLES = True
 OUTSIDE = False
-CONVEX = False
+CONVEX = True
 
 
 class Aggregations(Swarm):
@@ -46,7 +46,7 @@ class Aggregations(Swarm):
 
 
         # add sites to the environment if present
-        area_loc1, scale1, bigB1, area_loc2, scale2, bigB2 = experiment1(self.screen, OUTSIDE)
+        area_loc1, scale1, bigB1, area_loc2, scale2, bigB2 = experiment4(self.screen, OUTSIDE)
         filename2 = 'experiments/aggregation/images/greyc2.png' if bigB1 else 'experiments/aggregation/images/greyc1.png'
         filename3 = 'experiments/aggregation/images/greyc2.png' if bigB2 else 'experiments/aggregation/images/greyc1.png'
         self.objects.add_object(file=filename2, pos=area_loc1, scale=scale1, type='site')
@@ -88,4 +88,3 @@ class Aggregations(Swarm):
                 counter = counter + 1
 
         return counter
-
