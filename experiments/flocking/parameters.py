@@ -24,8 +24,11 @@ Flock class parameters (defines the environment of where the flock to act)
 """
 #Define the environment
 OBSTACLES = True
-OUTSIDE = True
+OUTSIDE = False
 CONVEX = True
+
+#object location
+OBJECT_LOC = [S_WIDTH/2., S_HEIGHT/2.]
 
 """
 Boid class parameters
