@@ -1,6 +1,4 @@
-import pygame
 import numpy as np
-import random as rd
 from simulation import helperfunctions
 from simulation.swarm import Swarm
 from experiments.aggregation.aggregationAgent import aggregationAgent
