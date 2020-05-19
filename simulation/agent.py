@@ -1,26 +1,21 @@
-import pygame
 import numpy as np
-from simulation import helperfunctions
 import random
+import pygame
+from simulation import helperfunctions
+
 
 """
 General agent properties, which are common across all types of agents 
 """
-
 #agent size
 WIDTH=10
 HEIGHT=8
 
-#agent maximum speed and 'duration'
-MAX_SPEED = 2.
 dT=1.
-
-
-
 
 #defines general agent properties
 class Agent(pygame.sprite.Sprite): #super class
-    def __init__(self, pos=None, v=None, image=None, color=None):
+    def __init__(self, pos=None, v=None, image=None, color=None, mass=None, max_speed=None):
         super(Agent, self).__init__()
 
         self.image_file = image
@@ -35,6 +30,10 @@ class Agent(pygame.sprite.Sprite): #super class
             self.image.fill(color)
             self.rect = self.image.get_rect()
             self.mask = pygame.mask.from_surface(self.image)
+
+        self.mass = mass
+        self.max_speed = max_speed
+        self.wandering_angle = helperfunctions.randrange(-np.pi, np.pi)  # set a random wandering angle
 
         self.steering = np.zeros(2)
         self.pos = np.zeros(2) if pos is None else pos
@@ -67,13 +66,27 @@ class Agent(pygame.sprite.Sprite): #super class
 
     def set_velocity(self):
         angle = np.pi * (2 * np.random.rand() - 1)
-        velocity = [random.randrange(1, MAX_SPEED + 1) * helperfunctions.plusminus(),
-                    random.randrange(1, MAX_SPEED + 1) * helperfunctions.plusminus()]
+        velocity = [random.randrange(1, self.max_speed + 1) * helperfunctions.plusminus(),
+                    random.randrange(1, self.max_speed + 1) * helperfunctions.plusminus()]
         velocity *= np.array([np.cos(angle), np.sin(angle)])
         return velocity
 
+    def wander(self, wander_dist, wander_radius, wander_angle):
+        """
+        Function to make the agents to perform random movement
+        """
+        rands = 2 * np.random.rand() - 1
+        cos = np.cos(self.wandering_angle)
+        sin = np.sin(self.wandering_angle)
+        n_v = helperfunctions.normalize(self.v)
+        circle_center = n_v * wander_dist
+        displacement = np.dot(np.array([[cos, -sin], [sin, cos]]), n_v * wander_radius)
+        wander_force = circle_center + displacement
+        self.wandering_angle += wander_angle * rands
+        return wander_force
+
     def update(self):
-        self.v = helperfunctions.truncate(self.v + self.steering, MAX_SPEED)
+        self.v = helperfunctions.truncate(self.v + self.steering, self.max_speed)
         self.pos += self.v * dT
 
 

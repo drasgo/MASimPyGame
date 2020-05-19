@@ -1,10 +1,10 @@
-from simulation.swarm import Swarm
-from experiments.covid.person import Person
-from simulation import helperfunctions
 import numpy as np
+from simulation.swarm import Swarm
+from simulation import helperfunctions
+from experiments.covid.person import Person
+from experiments.covid import parameters as p
 
-#initial condition probabilities
-INFECTED = 0.01
+
 
 
 class Population(Swarm):
@@ -20,7 +20,7 @@ class Population(Swarm):
         for id, agent in enumerate(range(num_agents)):
             coordinates = helperfunctions.generate_coordinates(self.screen)
 
-            if id < (int(round(INFECTED*num_agents))):
+            if id < (int(round(p.INFECTED*num_agents))):
                 self.add_agents(coordinates, 'I', swarm)
             else:
                 self.add_agents(coordinates, 'S', swarm)

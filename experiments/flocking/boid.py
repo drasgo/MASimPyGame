@@ -2,36 +2,16 @@ import pygame
 import numpy as np
 from simulation import helperfunctions
 from simulation.agent import Agent
+from experiments.flocking import parameters as p
 
 """
 Specific boid properties and helperfunctions 
 """
-#boid mass
-MASS = 20
-
-#Viewing angle
-RADIUS_VIEW=150
-
-#velocity force
-BOID_MAX_FORCE = 9.
-
-#Wander settings
-WANDER_RADIUS = 3.0
-WANDER_DIST = 5.0
-WANDER_ANGLE = 1.0
-
-#weights for velocity forces
-COHESION_WEIGHT = 8.
-ALIGNMENT_WEIGHT = 2.
-SEPERATION_WEIGHT = 7.
-WANDER_WEIGHT=1.3
 
 class Boid(Agent):
-    def __init__(self, pos, v, flock, image='experiments/flocking/images/normal-boid.png', mass=MASS):
-        super(Boid,self).__init__(pos,v,image)
+    def __init__(self, pos, v, flock, image='experiments/flocking/images/normal-boid.png'):
+        super(Boid,self).__init__(pos,v,image, mass=p.MASS, max_speed=p.MAX_SPEED)
 
-        self.mass = mass
-        self.wandering_angle = helperfunctions.randrange(-np.pi, np.pi) #set a random wandering angle
         self.flock = flock
 
 
@@ -46,13 +26,13 @@ class Boid(Agent):
         align_force, cohesion_force, separate_force = self.neighbor_forces()
 
         #combine the vectors in one
-        total_force = self.wander() * WANDER_WEIGHT\
-                + align_force * ALIGNMENT_WEIGHT \
-                + cohesion_force * COHESION_WEIGHT\
-                + separate_force * SEPERATION_WEIGHT
+        total_force = self.wander(p.WANDER_DIST,p.WANDER_RADIUS,p.WANDER_ANGLE) * p.WANDER_WEIGHT\
+                + align_force * p.ALIGNMENT_WEIGHT \
+                + cohesion_force * p.COHESION_WEIGHT\
+                + separate_force * p.SEPERATION_WEIGHT
 
         #adjust the direction of the boid
-        self.steering += helperfunctions.truncate(total_force / self.mass, BOID_MAX_FORCE)
+        self.steering += helperfunctions.truncate(total_force / self.mass, p.MAX_FORCE)
 
     #actions
     def avoid_obstacle(self, obstacle_center, obstacle_outside):
@@ -91,27 +71,13 @@ class Boid(Agent):
         self.v = (helperfunctions.rotate(helperfunctions.normalize(self.v)) * helperfunctions.norm(self.v))  # 5.
 
 
-    def wander(self):
-        """
-        Function to make the agents to perform random movement
-        """
-        rands = 2 * np.random.rand() - 1
-        cos = np.cos(self.wandering_angle)
-        sin = np.sin(self.wandering_angle)
-        n_v = helperfunctions.normalize(self.v)
-        circle_center = n_v * WANDER_DIST
-        displacement = np.dot(np.array([[cos, -sin], [sin, cos]]), n_v * WANDER_RADIUS)
-        wander_force = circle_center + displacement
-        self.wandering_angle += WANDER_ANGLE * rands
-        return wander_force
-
 
     def neighbor_forces(self):
 
         align_force, cohesion_force, separate_force = np.zeros(2), np.zeros(2), np.zeros(2)
 
         #find all the neighbors of a boid based on its radius view
-        neighbors = self.flock.find_neighbors(self, RADIUS_VIEW)
+        neighbors = self.flock.find_neighbors(self, p.RADIUS_VIEW)
 
         #if there are neighbors, estimate the influence of their forces
         if neighbors:

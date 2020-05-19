@@ -1,5 +1,6 @@
 import numpy as np
 from experiments.flocking.boid import Boid
+from experiments.flocking import parameters as p
 from simulation.swarm import Swarm
 from simulation import helperfunctions
 
@@ -8,15 +9,10 @@ Specific flock properties, and flocking environment definition
 """
 
 
-#Define the environment
-OBSTACLES = True
-OUTSIDE = True
-CONVEX = True
-
 class Flock(Swarm): #also access methods from the super class Swarm
     def __init__(self, screen_size):
         super(Flock, self).__init__(screen_size)
-        self.object_loc = OUTSIDE
+        self.object_loc = p.OUTSIDE
 
     def add_agents(self, pos, flock):
         super(Flock,self).add_agent(Boid(pos=np.array(pos),v=None, flock=flock))
@@ -25,15 +21,15 @@ class Flock(Swarm): #also access methods from the super class Swarm
     def initialize(self, num_agents, swarm):
 
         #add obstacle/-s to the environment if present
-        if OBSTACLES:
+        if p.OBSTACLES:
             object_loc = [self.screen[0]/2.,self.screen[1]/2.]
 
-            if OUTSIDE:
+            if p.OUTSIDE:
                 scale = [300,300]
             else:
                 scale = [700,700]
 
-            filename = 'experiments/flocking/images/convex.png' if CONVEX else 'experiments/flocking/images/redd.png'
+            filename = 'experiments/flocking/images/convex.png' if p.CONVEX else 'experiments/flocking/images/redd.png'
 
             self.objects.add_object(file= filename, pos=object_loc, scale=scale, type='obstacle')
 
@@ -46,8 +42,8 @@ class Flock(Swarm): #also access methods from the super class Swarm
             coordinates = helperfunctions.generate_coordinates(self.screen)
 
             #if obstacles present re-estimate the corrdinates
-            if OBSTACLES:
-                if OUTSIDE:
+            if p.OBSTACLES:
+                if p.OUTSIDE:
                     while coordinates[0]<=max_x and coordinates[0]>=min_x and coordinates[1]<=max_y and coordinates[1]>=min_y:
                         coordinates = helperfunctions.generate_coordinates(self.screen)
                 else:

@@ -3,34 +3,18 @@ import random as rd
 import numpy as np
 from simulation import helperfunctions
 from simulation.agent import Agent
+from experiments.aggregation import parameters as p
 
 """
 Specific the aggregation agent properties and actions
 """
 
-#boid mass
-MASS = 20
-
-# Agents Viewing angle
-RADIUS_VIEW = 50
-
-#Wander settings
-WANDER_RADIUS = 3.0
-WANDER_DIST = 5.0
-WANDER_ANGLE = 1.0
-
-# For velocity forces
-WANDER_WEIGHT=0.4
-BOID_MAX_FORCE = 5.
-
 
 class aggregationAgent(Agent):
-    def __init__(self, pos, v, aggregation, mass = MASS, image='experiments/aggregation/images/color_ant.png'):
-        super(aggregationAgent,self).__init__(pos,v,image)
+    def __init__(self, pos, v, aggregation, image='experiments/aggregation/images/color_ant.png'):
+        super(aggregationAgent,self).__init__(pos,v,image, mass=p.MASS, max_speed=p.MAX_SPEED)
         self.aggregation = aggregation
         self.wandering = True
-        self.wandering_angle = helperfunctions.randrange(-np.pi, np.pi)  # set a random wandering angle
-        self.mass = mass
 
     def change_state_stop(self):
         self.wandering = False
@@ -54,7 +38,7 @@ class aggregationAgent(Agent):
         for area in self.aggregation.objects.sites:
             collide = pygame.sprite.collide_mask(self, area)
             prob = rd.random()
-            neighbors = self.aggregation.find_neighbors(self, RADIUS_VIEW)
+            neighbors = self.aggregation.find_neighbors(self, p.RADIUS_VIEW)
             if bool(collide) and prob < self.siteAreaBehaviour(len(neighbors)):
                 if self.wandering:
                     self.change_state_stop()
@@ -66,25 +50,11 @@ class aggregationAgent(Agent):
             if bool(collide):
                 self.avoid_obstacle(obstacle.pos, self.aggregation.object_loc)
 
-        total_force = self.wander() * WANDER_WEIGHT
+        total_force = self.wander(p.WANDER_DIST,p.WANDER_RADIUS,p.WANDER_ANGLE) * p.WANDER_WEIGHT
 
         # adjust the direction of the boid
-        self.steering += helperfunctions.truncate(total_force / self.mass, BOID_MAX_FORCE)
+        self.steering += helperfunctions.truncate(total_force / self.mass, p.MAX_FORCE)
 
-
-    def wander(self):
-        """
-        Function to make the agents to perform random movement
-        """
-        rands = 2 * np.random.rand() - 1
-        cos = np.cos(self.wandering_angle)
-        sin = np.sin(self.wandering_angle)
-        n_v = helperfunctions.normalize(self.v)
-        circle_center = n_v * WANDER_DIST
-        displacement = np.dot(np.array([[cos, -sin], [sin, cos]]), n_v * WANDER_RADIUS)
-        wander_force = circle_center + displacement
-        self.wandering_angle += WANDER_ANGLE * rands
-        return wander_force
 
 
     #actions
@@ -121,7 +91,7 @@ class aggregationAgent(Agent):
                 self.pos[1] -= y
 
         #adjust the velocity by rotating it around
-        self.v = (helperfunctions.rotate(helperfunctions.normalize(self.v)) * helperfunctions.norm(self.v))  # 5.
+        self.v = (helperfunctions.rotate(helperfunctions.normalize(self.v)) * helperfunctions.norm(self.v))
 
 
     # Defines the behaviour of the agent in a Site
