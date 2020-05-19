@@ -24,7 +24,7 @@ Flock class parameters (defines the environment of where the flock to act)
 """
 #Define the environment
 OBSTACLES = True
-OUTSIDE = False
+OUTSIDE = True
 CONVEX = True
 
 #object location

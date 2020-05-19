@@ -24,7 +24,7 @@ class Aggregations(Swarm):
 
         # add obstacle/-s to the environment if present
         if p.OBSTACLES:
-            object_loc = [self.screen[0] / 2., self.screen[1] / 2.]
+            object_loc = p.OBJECT_LOC
 
             if p.OUTSIDE:
                 scale = [300, 300]

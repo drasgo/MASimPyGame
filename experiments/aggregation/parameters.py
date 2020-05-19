@@ -25,6 +25,9 @@ OBSTACLES = True
 OUTSIDE = False
 CONVEX = True
 
+#object location
+OBJECT_LOC = [S_WIDTH/2., S_HEIGHT/2.]
+
 
 """
 AggregationAgent class settings
