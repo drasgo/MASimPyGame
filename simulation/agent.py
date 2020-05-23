@@ -5,13 +5,13 @@ from simulation import helperfunctions
 
 
 """
-General agent properties, which are common across all types of agents 
+General agent properties, which are common across all types of agents
 """
 #agent size
 WIDTH=10
 HEIGHT=8
 
-dT=1.
+dT=.5
 
 #defines general agent properties
 class Agent(pygame.sprite.Sprite): #super class
