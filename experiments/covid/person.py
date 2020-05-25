@@ -19,7 +19,8 @@ class Person(Agent):
         self.type = type
         self.population = population
         self.transmittable = False
-        self.time_infected = 0.
+        self.time_infected_C = 0.
+        self.time_possible_I = p.TIME_TRANSMITTABLE+np.random.randint(100)
         self.time_to_recover = 0.
         # self.droplets = 0.
 
@@ -31,7 +32,7 @@ class Person(Agent):
         if self.type == 'I':
             self.time_infected += 1
             self.time_to_recover += 1
-            if self.time_infected >= (p.TIME_TRANSMITTABLE+np.random.randint(100)):
+            if self.time_infected >= (self.time_possible_I):
                 self.transmittable = False
             else:
                 if np.random.uniform(0, 1)<p.P_COUGH: #person is only infectious if they cough
