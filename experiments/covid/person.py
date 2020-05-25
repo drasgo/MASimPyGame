@@ -13,13 +13,15 @@ class Person(Agent):
         else:
             color = p.GREEN
 
-        super(Person,self).__init__(pos, v, color=color, mass=p.MASS, max_speed=p.MAX_SPEED)
+        super(Person,self).__init__(pos, v, color=color, mass=p.MASS, max_speed=p.MAX_SPEED,
+                                    width=p.WIDTH, height=p.HEIGHT, dT=p.dT)
 
         self.type = type
         self.population = population
         self.transmittable = False
         self.time_infected = 0.
         self.time_to_recover = 0.
+        # self.droplets = 0.
 
 
     def update_actions(self):
@@ -34,6 +36,7 @@ class Person(Agent):
             else:
                 if np.random.uniform(0, 1)<p.P_COUGH: #person is only infectious if they cough
                     self.transmittable = True
+                    # self.droplets += 1.
                 else:
                     self.transmittable = False
 

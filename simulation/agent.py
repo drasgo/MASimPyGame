@@ -119,9 +119,7 @@ class Agent(pygame.sprite.Sprite): #super class
                 self.pos[1] -= y
 
         #adjust the velocity by rotating it around
-        print('before', self.v)
         self.v = (helperfunctions.rotate(helperfunctions.normalize(self.v)) * helperfunctions.norm(self.v))
-        print('after', self.v)
 
 
 
