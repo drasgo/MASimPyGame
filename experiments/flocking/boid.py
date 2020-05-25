@@ -10,7 +10,10 @@ Specific boid properties and helperfunctions
 
 class Boid(Agent):
     def __init__(self, pos, v, flock, image='experiments/flocking/images/normal-boid.png'):
-        super(Boid,self).__init__(pos,v,image, mass=p.MASS, max_speed=p.MAX_SPEED)
+        super(Boid,self).__init__(pos,v,image,
+                                  max_speed=p.MAX_SPEED, min_speed=p.MIN_SPEED,
+                                  mass=p.MASS, width=p.WIDTH, height=p.HEIGHT,
+                                  dT=p.dT)
 
         self.flock = flock
 

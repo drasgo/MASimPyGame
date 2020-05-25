@@ -5,39 +5,40 @@ from simulation import helperfunctions
 
 
 """
-General agent properties, which are common across all types of agents
+General agent properties, which are common across all types of agents 
 """
-#agent size
-WIDTH=10
-HEIGHT=8
-
-dT=.5
 
 #defines general agent properties
 class Agent(pygame.sprite.Sprite): #super class
-    def __init__(self, pos=None, v=None, image=None, color=None, mass=None, max_speed=None):
+    def __init__(self, pos=None, v=None,
+                 image=None, color=None,
+                 max_speed=None, min_speed=None,
+                 mass=None, width=None, height=None,
+                 dT=None):
         super(Agent, self).__init__()
 
         self.image_file = image
         if self.image_file != None: #load image from file
-            self.base_image, self.rect = helperfunctions.image_with_rect(self.image_file, [WIDTH, HEIGHT])
+            self.base_image, self.rect = helperfunctions.image_with_rect(self.image_file, [width, height])
             self.image = self.base_image
             self.mask = pygame.mask.from_surface(self.image)
             self.mask = self.mask.scale((12, 10))
 
         else: #draw an agent
-            self.image = pygame.Surface((WIDTH,HEIGHT), pygame.SRCALPHA)
+            self.image = pygame.Surface((width,height), pygame.SRCALPHA)
             self.image.fill(color)
             self.rect = self.image.get_rect()
             self.mask = pygame.mask.from_surface(self.image)
 
         self.mass = mass
         self.max_speed = max_speed
+        self.min_speed = min_speed
         self.wandering_angle = helperfunctions.randrange(-np.pi, np.pi)  # set a random wandering angle
 
         self.steering = np.zeros(2)
         self.pos = np.zeros(2) if pos is None else pos
         self.v = self.set_velocity() if v is None else v
+        self.dT= dT
 
     @property
     def pos(self):
@@ -118,13 +119,15 @@ class Agent(pygame.sprite.Sprite): #super class
                 self.pos[1] -= y
 
         #adjust the velocity by rotating it around
+        print('before', self.v)
         self.v = (helperfunctions.rotate(helperfunctions.normalize(self.v)) * helperfunctions.norm(self.v))
+        print('after', self.v)
 
 
 
     def update(self):
-        self.v = helperfunctions.truncate(self.v + self.steering, self.max_speed)
-        self.pos += self.v * dT
+        self.v = helperfunctions.truncate(self.v + self.steering, self.max_speed, self.min_speed)
+        self.pos += self.v * self.dT
 
 
     def display(self, screen):

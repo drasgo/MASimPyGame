@@ -12,7 +12,10 @@ Specific the aggregation agent properties and actions
 
 class aggregationAgent(Agent):
     def __init__(self, pos, v, aggregation, image='experiments/aggregation/images/color_ant.png'):
-        super(aggregationAgent,self).__init__(pos,v,image, mass=p.MASS, max_speed=p.MAX_SPEED)
+        super(aggregationAgent,self).__init__(pos,v,image,
+                                              mass=p.MASS, max_speed=p.MAX_SPEED,
+                                              width=p.WIDTH, height=p.HEIGHT,
+                                              dT=p.dT)
         self.aggregation = aggregation
         self.wandering = True
         self.transition_of_state = None

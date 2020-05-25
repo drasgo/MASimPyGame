@@ -15,6 +15,12 @@ FRAMES=-1
 #choose swarm type
 SWARM = 'Aggregation'
 
+#agent size
+WIDTH=10
+HEIGHT=8
+
+dT=0.5
+
 
 """
 Aggregation class settings

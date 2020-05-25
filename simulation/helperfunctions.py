@@ -8,8 +8,17 @@ Useful vector transformation functions, and other to make the code more clear
 """
 
 def area(a,b):
-    min = (a - b/2) + b/3.5
-    max = (a + b/2) - b/3.5
+    """
+    :param a: object mid point
+    :param b: scale
+    :return:
+    """
+    if b<a:
+        max = a + 0.5*b
+        min = a - 0.5*b
+    else:
+        max = a + 0.25*b
+        min=a - 0.25*b
     return min, max
 
 def generate_coordinates(screensize):
@@ -63,11 +72,13 @@ def normalize(vector):
         return np.array(vector) / n
 
 
-def truncate(vector, max_length):
-    """Truncate the length of a vector to a maximum value."""
+def truncate(vector, max_length, min_lenght=None):
+    """Truncate the length of a vector to a maximum/minimum value."""
     n = norm(vector)
     if n > max_length:
         return normalize(vector) * max_length
+    elif min_lenght != None and n< min_lenght:
+        return normalize(vector)*min_lenght
     else:
         return vector
 
