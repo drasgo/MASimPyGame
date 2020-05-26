@@ -8,8 +8,6 @@ General settings
 #screen settings
 S_WIDTH, S_HEIGHT = 1000, 1000
 SCREEN = (S_WIDTH, S_HEIGHT)
-#define the number of agents
-N_AGENTS = 30
 
 #choose how long to run the simulation
 #-1 : infinite, N: finite
@@ -24,25 +22,29 @@ HEIGHT=8
 
 dT=0.2
 
+#object location
+OBJECT_LOC = [S_WIDTH/2., S_HEIGHT/2.]
 
 
 """
 Flock class parameters (defines the environment of where the flock to act)
 """
+
+#define the number of agents
+N_AGENTS = 30
+
 #Define the environment
 OBSTACLES = True
 OUTSIDE = True
 CONVEX = True
 
-#object location
-OBJECT_LOC = [S_WIDTH/2., S_HEIGHT/2.]
 
 """
 Boid class parameters
 """
 
 #agents mass
-MASS=15
+MASS=20
 
 #agent maximum/minimum speed
 MAX_SPEED = 7.
@@ -55,9 +57,9 @@ RADIUS_VIEW=50
 MAX_FORCE = 8.
 
 #Wander settings
-WANDER_RADIUS = 3.0
+WANDER_RADIUS = 2.5
 WANDER_DIST = 5.0
-WANDER_ANGLE = 1.0
+WANDER_ANGLE = 0.8
 
 #weights for velocity forces
 COHESION_WEIGHT = 3.5
