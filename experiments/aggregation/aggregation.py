@@ -15,10 +15,6 @@ class Aggregations(Swarm):
         self.object_loc = p.OUTSIDE
 
 
-    def add_agents(self, pos, aggregation):
-        super(Aggregations,self).add_agent(aggregationAgent(pos=np.array(pos),v=None, aggregation=aggregation))
-
-
     def initialize(self, num_agents, swarm):
 
         # add obstacle/-s to the environment if present
@@ -61,18 +57,7 @@ class Aggregations(Swarm):
                         1] <= min_y:
                         coordinates = helperfunctions.generate_coordinates(self.screen)
 
-            self.add_agents(coordinates, swarm)
-
-        #print(self.agents)
-
-
-    def update(self):
-        for cockroach in self.agents:
-            cockroach.update_actions()
-            #print(cockroach.get_state())
-
-        self.remain_in_screen()
-        self.update_general()
+            self.add_agent(aggregationAgent(pos=np.array(coordinates),v=None, aggregation=swarm))
 
 
     def get_number_wandering_agents(self):
