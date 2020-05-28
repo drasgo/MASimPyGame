@@ -50,9 +50,18 @@ class Swarm(pygame.sprite.Sprite):
             if agent.pos[1] > self.screen[1]:
                 agent.pos[1]=0.
 
-    def update_general(self):
+
+    def update(self):
+        #update the movement
+        for agent in self.agents:
+            agent.update_actions()
+
+        self.remain_in_screen()
+
+        #execute the update
         for agent in self.agents:
             agent.update()
+
 
     def display(self, screen):
         for obstacle in self.objects.obstacles:

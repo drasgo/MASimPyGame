@@ -71,11 +71,3 @@ class Flock(Swarm): #also access methods from the super class Swarm
             difference /= helperfunctions.norm(difference) #normalize to unit vector with respect to its maginiture
             separate += difference #add the influences of all neighbors up
         return separate/len(neighbors)
-
-    def update(self): #simplify by passing flock, and see whether can simply the update to one (while keeping for each agent)
-        for boid in self.agents:
-            boid.update_actions()
-
-        self.remain_in_screen()
-        self.update_general()
-
