@@ -14,10 +14,6 @@ class Flock(Swarm): #also access methods from the super class Swarm
         super(Flock, self).__init__(screen_size)
         self.object_loc = p.OUTSIDE
 
-    def add_agents(self, pos, flock):
-        super(Flock,self).add_agent(Boid(pos=np.array(pos),v=None, flock=flock))
-
-
     def initialize(self, num_agents, swarm):
 
         #add obstacle/-s to the environment if present
@@ -50,7 +46,7 @@ class Flock(Swarm): #also access methods from the super class Swarm
                     while coordinates[0]>=max_x or coordinates[0]<=min_x or coordinates[1]>=max_y or coordinates[1]<=min_y:
                         coordinates = helperfunctions.generate_coordinates(self.screen)
 
-            self.add_agents(coordinates, swarm)
+            self.add_agent(Boid(pos=np.array(coordinates),v=None, flock=swarm))
 
 
     def find_neighbor_velocity(self, neighbors):
