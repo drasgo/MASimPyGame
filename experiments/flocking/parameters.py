@@ -31,10 +31,10 @@ Flock class parameters (defines the environment of where the flock to act)
 """
 
 #define the number of agents
-N_AGENTS = 30
+N_AGENTS = 40
 
 #Define the environment
-OBSTACLES = True
+OBSTACLES = False
 OUTSIDE = True
 CONVEX = True
 
@@ -51,7 +51,7 @@ MAX_SPEED = 7.
 MIN_SPEED = 4.
 
 #view of neighbor agents
-RADIUS_VIEW=50
+RADIUS_VIEW= 70
 
 #velocity force
 MAX_FORCE = 8.
@@ -69,10 +69,80 @@ WANDER_WEIGHT=0.01
 
 
 
+# Best settings for convex, outside
+# N_AGENTS = 40
+# #agents mass
+# MASS=20
+#
+# #agent maximum/minimum speed
+# MAX_SPEED = 7.
+# MIN_SPEED = 4.
+#
+# #view of neighbor agents
+# RADIUS_VIEW=70
+#
+# #velocity force
+# MAX_FORCE = 8.
+#
+# #Wander settings
+# WANDER_RADIUS = 2.5
+# WANDER_DIST = 5.0
+# WANDER_ANGLE = 0.8
+#
+# #weights for velocity forces
+# COHESION_WEIGHT = 4.
+# ALIGNMENT_WEIGHT = 4.5
+# SEPERATION_WEIGHT = 6.
+# WANDER_WEIGHT=0.01
 
+# Best settings for convex, inside
+# #agents mass
+# MASS=20
+#
+# #agent maximum/minimum speed
+# MAX_SPEED = 7.
+# MIN_SPEED = 4.
+#
+# #view of neighbor agents
+# RADIUS_VIEW= 60
+#
+# #velocity force
+# MAX_FORCE = 8.
+#
+# #Wander settings
+# WANDER_RADIUS = 2.5
+# WANDER_DIST = 5.0
+# WANDER_ANGLE = 0.8
+#
+# #weights for velocity forces
+# COHESION_WEIGHT = 3.
+# ALIGNMENT_WEIGHT = 4.5
+# SEPERATION_WEIGHT = 6.5
+# WANDER_WEIGHT=0.01
 
+#best settings when no obstalce
 
-
+#agent maximum/minimum speed
+# MASS=20
+# MAX_SPEED = 7.
+# MIN_SPEED = 4.
+#
+# #view of neighbor agents
+# RADIUS_VIEW= 70
+#
+# #velocity force
+# MAX_FORCE = 8.
+#
+# #Wander settings
+# WANDER_RADIUS = 2.5
+# WANDER_DIST = 5.0
+# WANDER_ANGLE = 0.8
+#
+# #weights for velocity forces
+# COHESION_WEIGHT = 3.5
+# ALIGNMENT_WEIGHT = 4.5
+# SEPERATION_WEIGHT = 6.
+# WANDER_WEIGHT=0.01
 
 
 

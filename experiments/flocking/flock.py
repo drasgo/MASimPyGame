@@ -23,7 +23,7 @@ class Flock(Swarm): #also access methods from the super class Swarm
             if p.OUTSIDE:
                 scale = [300,300]
             else:
-                scale = [700,700]
+                scale = [800,800]
 
             filename = 'experiments/flocking/images/convex.png' if p.CONVEX else 'experiments/flocking/images/redd.png'
 
