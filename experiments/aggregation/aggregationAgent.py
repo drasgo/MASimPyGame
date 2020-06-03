@@ -10,9 +10,9 @@ Specific the aggregation agent properties and actions
 """
 
 
-class aggregationAgent(Agent):
+class Cockroach(Agent):
     def __init__(self, pos, v, aggregation, image='experiments/aggregation/images/color_ant.png'):
-        super(aggregationAgent,self).__init__(pos,v,image,
+        super(Cockroach,self).__init__(pos,v,image,
                                               mass=p.MASS, max_speed=p.MAX_SPEED,
                                               width=p.WIDTH, height=p.HEIGHT,
                                               dT=p.dT)

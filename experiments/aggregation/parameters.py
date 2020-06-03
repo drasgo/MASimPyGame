@@ -29,7 +29,7 @@ Aggregation class settings
 #Define the environment
 OBSTACLES = True
 OUTSIDE = False
-CONVEX = True
+CONVEX = False 
 
 #object location
 OBJECT_LOC = [S_WIDTH/2., S_HEIGHT/2.]
@@ -45,7 +45,7 @@ MASS=20
 MAX_SPEED = 10.
 
 # Agents Viewing angle
-RADIUS_VIEW = 30
+RADIUS_VIEW = 20
 
 # For velocity forces
 WANDER_WEIGHT=1.3
@@ -64,7 +64,7 @@ The testing scenarios recommended by Eliseo
 """
 
 def experiment1(screensize, outside): # Different sizes | Different locations
-    area_loc1 = [55 + screensize[0]/4., 55 + screensize[1]/3.]
+    area_loc1 = [55 + screensize[0]/3.5, 55 + screensize[1]/3.]
     area_loc2 = [screensize[0]/2., screensize[1]/2.]
 
 
@@ -82,7 +82,7 @@ def experiment1(screensize, outside): # Different sizes | Different locations
 
 
 def experiment2(screensize, outside): # Same size | Big | Different locations
-    area_loc1 = [55 + screensize[0]/4., 55 + screensize[1]/3.]
+    area_loc1 = [55 + screensize[0]/3.3, 55 + screensize[1]/3.]
     area_loc2 = [screensize[0]/2., screensize[1]/2.]
 
     if outside:
@@ -98,8 +98,8 @@ def experiment2(screensize, outside): # Same size | Big | Different locations
     return area_loc1, scale1, bigB1, area_loc2, scale2, bigB2
 
 def experiment3(screensize, outside): # Different sizes |  Symmetric locations
-    area_loc1 = [screensize[0]/2. - screensize[0]/4., screensize[1]/2.]
-    area_loc2 = [screensize[0]/4. + screensize[0]/2., screensize[1]/2.]
+    area_loc1 = [screensize[0]/2. - screensize[0]/4.5, screensize[1]/2.]
+    area_loc2 = [screensize[0]/4.5 + screensize[0]/2., screensize[1]/2.]
 
     if outside:
         scale1 = [140,140]
