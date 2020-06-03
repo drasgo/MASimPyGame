@@ -45,7 +45,7 @@ MASS=20
 MAX_SPEED = 10.
 
 # Agents Viewing angle
-RADIUS_VIEW = 20
+RADIUS_VIEW = 25
 
 # For velocity forces
 WANDER_WEIGHT=1.3
