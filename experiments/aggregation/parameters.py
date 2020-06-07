@@ -63,6 +63,20 @@ NUM_STEPS = 3
 The testing scenarios recommended by Eliseo
 """
 
+def experiment0(screensize, outside): # Different sizes | Different locations
+    area_loc1 = [screensize[0]/2., screensize[1]/2.]
+
+
+    if outside:
+        scale1 = [140,140]
+    else:
+        scale1 = [110,110]
+
+    bigB1 = False
+
+    return area_loc1, scale1, bigB1
+
+
 def experiment1(screensize, outside): # Different sizes | Different locations
     area_loc1 = [55 + screensize[0]/3.5, 55 + screensize[1]/3.]
     area_loc2 = [screensize[0]/2., screensize[1]/2.]

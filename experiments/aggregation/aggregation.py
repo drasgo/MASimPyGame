@@ -35,11 +35,12 @@ class Aggregations(Swarm):
 
 
         # add sites to the environment if present
-        area_loc1, scale1, bigB1, area_loc2, scale2, bigB2 = p.experiment2(self.screen, p.OUTSIDE)
+        #area_loc1, scale1, bigB1, area_loc2, scale2, bigB2 = p.experiment2(self.screen, p.OUTSIDE)
+        area_loc1, scale1, bigB1 = p.experiment0(self.screen, p.OUTSIDE)
         filename2 = 'experiments/aggregation/images/greyc2.png' if bigB1 else 'experiments/aggregation/images/greyc1.png'
-        filename3 = 'experiments/aggregation/images/greyc2.png' if bigB2 else 'experiments/aggregation/images/greyc1.png'
+        #filename3 = 'experiments/aggregation/images/greyc2.png' if bigB2 else 'experiments/aggregation/images/greyc1.png'
         self.objects.add_object(file=filename2, pos=area_loc1, scale=scale1, type='site')
-        self.objects.add_object(file=filename2, pos=area_loc2, scale=scale2, type='site')
+        #self.objects.add_object(file=filename3, pos=area_loc2, scale=scale2, type='site')
 
 
         # add agents to the environment
