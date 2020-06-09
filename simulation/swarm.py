@@ -58,6 +58,7 @@ class Swarm(pygame.sprite.Sprite):
 
         self.remain_in_screen()
 
+    def update_general(self):
         #execute the update
         for agent in self.agents:
             agent.update()
