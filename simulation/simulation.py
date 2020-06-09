@@ -1,5 +1,6 @@
 import pygame
 import sys
+import time
 from experiments.flocking.flock import Flock
 from experiments.covid.population import Population
 from experiments.aggregation.aggregation import Aggregations
@@ -73,6 +74,7 @@ class Simulation():
 
 
     def CovidPlot(self, data):
+        output_name = "experiments/covid/plots/Covid-19-SIR%s.png" % time.strftime("-%m.%d.%y-%H:%M", time.localtime())
         fig = plt.figure()
         plt.plot(data['S'], label="Susceptible", color=(1,0.5,0)) #Orange
         plt.plot(data['I'], label="Infected", color=(1,0,0)) #Red
@@ -81,7 +83,7 @@ class Simulation():
         plt.xlabel("Time")
         plt.ylabel("Population")
         plt.legend()
-        fig.savefig("plots/Covid-19-SIR")
+        fig.savefig(output_name)
         plt.show()
 
     def FlockPlot(self, data):
