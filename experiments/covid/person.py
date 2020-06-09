@@ -77,7 +77,7 @@ class Person(Agent):
         for obstacle in self.population.objects.obstacles:
             collide = pygame.sprite.collide_mask(self, obstacle)
             if bool(collide):
-                self.avoid_obstacle(obstacle.pos, self.population.object_loc)
+                self.avoid_obstacle()
 
         force = self.wander(p.WANDER_DIST,p.WANDER_RADIUS,p.WANDER_ANGLE)
 

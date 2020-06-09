@@ -59,7 +59,7 @@ class Cockroach(Agent):
         for obstacle in self.aggregation.objects.obstacles:
             collide = pygame.sprite.collide_mask(self, obstacle)
             if bool(collide) and self.wandering:
-                self.avoid_obstacle(obstacle.pos, self.aggregation.object_loc)
+                self.avoid_obstacle()
 
         total_force = self.wander(p.WANDER_DIST,p.WANDER_RADIUS,p.WANDER_ANGLE) * p.WANDER_WEIGHT
 

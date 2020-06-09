@@ -86,38 +86,12 @@ class Agent(pygame.sprite.Sprite): #super class
         self.wandering_angle += wander_angle * rands
         return wander_force
 
-    def avoid_obstacle(self, obstacle_center, obstacle_outside):
+    def avoid_obstacle(self):
         """
         Function to avoid obstacles
         need to take into account whether agents inside/outside the obstacle
         moves the agent away from the boarder by distance equivalent to its size
-        :param obstacle_center: tuple (int,int), the center coordinates of the obstacle
-        :param obstacle_outside: boolean, defines whether the agents are inside or outside of the obstacle
         """
-        # x,y = self.mask.get_size() #get the size of the boid
-        # x_ob, y_ob = obstacle_center
-        #
-        # if obstacle_outside: #agents outside the obstacle
-        #     if self.pos[0] >= x_ob:
-        #         self.pos[0] += x
-        #     else:
-        #         self.pos[0] -= x
-        #
-        #     if self.pos[1] >= y_ob:
-        #         self.pos[1] += y
-        #     else:
-        #         self.pos[1] -= y
-        # else:  #agents inside the obstacle:
-        #     if self.pos[0] <= x_ob:
-        #         self.pos[0] +=x
-        #     else:
-        #         self.pos[0] -=x
-        #
-        #     if self.pos[1] <= y_ob:
-        #         self.pos[1] += y
-        #     else:
-        #         self.pos[1] -= y
-
         #adjust the velocity by rotating it around
         self.v = (helperfunctions.rotate(helperfunctions.normalize(self.v)) * helperfunctions.norm(self.v))
         self.pos += self.v

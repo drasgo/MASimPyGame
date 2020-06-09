@@ -24,7 +24,7 @@ class Boid(Agent):
         for obstacle in self.flock.objects.obstacles:
             collide = pygame.sprite.collide_mask(self, obstacle)
             if bool(collide):
-                self.avoid_obstacle(obstacle.pos, self.flock.object_loc)
+                self.avoid_obstacle()
 
         align_force, cohesion_force, separate_force = self.neighbor_forces()
 
