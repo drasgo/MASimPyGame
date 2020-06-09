@@ -88,4 +88,6 @@ class Person(Agent):
         elif self.type == 'S':
             self.susceptible()
 
+        self.population.datapoints.append(self.type)
+
         self.steering +=  helperfunctions.truncate(force/self.mass, p.MAX_FORCE)

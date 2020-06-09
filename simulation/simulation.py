@@ -86,21 +86,21 @@ class Simulation():
         fig.savefig(output_name)
         plt.show()
 
-    def FlockPlot(self, data):
+    def FlockPlot(self):
         pass
 
-    def AggregationPlot(self, data):
+    def AggregationPlot(self):
         pass
 
-    def plot(self, data):
+    def plot(self):
         if self.swarm_type == 'Covid':
-            self.CovidPlot(data)
+            self.CovidPlot(self.swarm.points_to_plot)
 
         elif self.swarm_type == 'Flock':
-            self.FlockPlot(data)
+            self.FlockPlot()
 
         elif self.swarm_type == 'Aggregation':
-            self.AggregationPlot(data)
+            self.AggregationPlot()
 
     def run(self):
         #initialize the environment and agent/obstacle positions
@@ -114,10 +114,10 @@ class Simulation():
                     if event.type == pygame.QUIT:
                         # The event is pushing the x button, not ctrl-c.
                         self.running = False
-                        self.plot(self.swarm.points_to_plot)
+                        self.plot()
         else:
             for i in range(self.iter):
                 self.simulate()
-            self.plot(self.swarm.points_to_plot)
+            self.plot()
 
 

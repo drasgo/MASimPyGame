@@ -34,7 +34,7 @@ Flock class parameters (defines the environment of where the flock to act)
 N_AGENTS = 40
 
 #Define the environment
-OBSTACLES = False
+OBSTACLES = True
 OUTSIDE = True
 CONVEX = True
 

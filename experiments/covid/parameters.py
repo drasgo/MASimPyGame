@@ -21,7 +21,7 @@ SWARM = 'Covid'
 WIDTH=5
 HEIGHT=5
 
-dT=0.8
+dT=0.2
 
 """
 Covid class parameters (defines the environment of where the flock to act)
@@ -46,8 +46,8 @@ Person class settings
 MASS=50
 
 #agent maximum speed and 'duration'
-MAX_SPEED = 2.
-MIN_SPEED = 1.
+MAX_SPEED = 5.
+MIN_SPEED = 3.
 
 MAX_FORCE= 0.6
 RADIUS_VIEW=25

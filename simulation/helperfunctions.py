@@ -91,5 +91,6 @@ def speedvector(max_speed):
     return [random.randrange(1,max_speed*2+1)*plusminus(), random.randrange(1,max_speed*2+1)*plusminus()]
 
 
-
+def relative(u,v):
+    return [int(u[i]) - int(v[i]) for i in range(len(u))]
 

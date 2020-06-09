@@ -9,11 +9,13 @@ General swarm class that defines general swarm properties, which are common acro
 #superclass
 class Swarm(pygame.sprite.Sprite):
 
-    def __init__(self,screen_size):
+    def __init__(self,screen_size, plot=None):
         super(Swarm,self).__init__()
         self.agents = pygame.sprite.Group()
         self.screen = screen_size
         self.objects = Objects()
+        self.points_to_plot = plot
+        self.datapoints = []
 
 
     def add_agent(self,agent):
@@ -50,15 +52,26 @@ class Swarm(pygame.sprite.Sprite):
             if agent.pos[1] > self.screen[1]:
                 agent.pos[1]=0.
 
+    # plotting the number of infected and recovered
+    def add_point(self, lst):
+        #Count current numbers
+        values = {'S':0, 'I':0, 'R':0}
+        for state in lst:
+            values[state] += 1
+
+        for x in values:
+            self.points_to_plot[x].append(values[x])
 
     def update(self):
         #update the movement
+        self.datapoints = []
         for agent in self.agents:
             agent.update_actions()
 
+        if len(self.datapoints):
+            self.add_point(self.datapoints)
         self.remain_in_screen()
 
-    def update_general(self):
         #execute the update
         for agent in self.agents:
             agent.update()
