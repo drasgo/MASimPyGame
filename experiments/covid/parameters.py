@@ -21,7 +21,7 @@ SWARM = 'Covid'
 WIDTH=5
 HEIGHT=5
 
-dT=1
+dT=0.8
 
 """
 Covid class parameters (defines the environment of where the flock to act)

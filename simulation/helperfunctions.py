@@ -51,7 +51,7 @@ def plusminus():
 
 def rotate(vector):
     new_vector=np.zeros(2)
-    theta=np.deg2rad(random.randint(120,180))
+    theta=np.deg2rad(random.randint(135,225))
     cs = np.cos(theta)
     sn = np.sin(theta)
     new_vector[0] = vector[0] *cs - vector[1]*sn
