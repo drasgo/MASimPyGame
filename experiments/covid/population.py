@@ -8,15 +8,14 @@ from experiments.covid import parameters as p
 class Population(Swarm):
     def __init__(self, screen_size):
         super(Population, self).__init__(screen_size, plot={'S':[], "I":[], "R":[]})
-        self.object_loc = p.OUTSIDE
 
     def initialize(self, num_agents, swarm):
 
         # add obstacle/-s to the environment if present
         if p.OBSTACLES:
             object_loc = p.OBJECT_LOC #center point location
-            scale = [700, 700]
-            filename = 'experiments/covid/images/maze.png'
+            scale = [800, 800]
+            filename = 'experiments/covid/images/house2.png'
             # filename = 'experiments/covid/images/house.png'
 
             self.objects.add_object(file=filename, pos=object_loc, scale=scale, type='obstacle')

@@ -27,9 +27,9 @@ class Object(pygame.sprite.Sprite):
     def __init__(self, filename = None, pos=None, scale=None):
         super(Object,self).__init__()
         self.image, self.rect = helperfunctions.image_with_rect(filename, scale)
-        self.mask = pygame.mask.from_surface(self.image)
         self.pos = pos if pos is not None else np.zeros(2)
         self.rect = self.image.get_rect(center=self.pos)
+        self.mask = pygame.mask.from_surface(self.image)
 
 
     def display(self, screen):

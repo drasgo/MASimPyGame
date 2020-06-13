@@ -28,9 +28,7 @@ Covid class parameters (defines the environment of where the flock to act)
 """
 #Define the environment
 OBSTACLES = True
-OUTSIDE = True
-CONVEX = False
-OBJECT_LOC = [S_WIDTH/2., S_HEIGHT/2.]
+OBJECT_LOC = [S_WIDTH/1.5, S_HEIGHT/1.5]
 
 """
 Population class settings
