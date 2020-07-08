@@ -19,6 +19,7 @@ Current example based on the flocking phenomena
 3. **experiments folder** Contains separate folder for each experiment:
     - flocking 
     - aggregation
+    - covid
 
 
 4. **flocking folder** Contains detailed characteristics of a flocking behavior
@@ -28,9 +29,8 @@ Current example based on the flocking phenomena
     
 5. **aggregation folder** Contains detailed characteristics for aggregation behavior
 
-    TO BE WRITTEN BY ANDRE
-    - `aggreagte.py`
-    - `cockroach.py`
+    - `aggreagte.py`defines the environment of the aggregation simuation
+    - `cockroach.py` defines the specific agent actions
     
 6. **covid folder** Contains experimental set-up for modeling disease spread based on the SIR model
     - `population.py` defines the properties of the population, such as initial infected proportion
