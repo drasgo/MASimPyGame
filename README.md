@@ -1,7 +1,7 @@
-# BoidsPyGame
+# MASimPyGame
 Implementation of multi-agent simulations in PyGame.
 
-Current example based on the flocking phenomena 
+Current examples cotain flocking, aggergation and disease spread.
 
 ## Contents
 1. `main.py` The main file to execute, can specify here the general simulation settings:
