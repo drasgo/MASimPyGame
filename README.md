@@ -64,6 +64,12 @@ Boids inside a convex object
 
 ![Output sample](https://github.com/IlzeAmandaA/BoidsPyGame/blob/master/gifs/convexgif.gif)
 
+
+Here is an Aggregation collective behavior example:
+
+![Output sample](https://github.com/IlzeAmandaA/BoidsPyGame/blob/master/gifs/aggregation_scenario1.gif)
+
+
 Here are simple disease spread example:
 
 ![Output sample](https://github.com/IlzeAmandaA/BoidsPyGame/blob/master/gifs/covid_randomwalk.gif)

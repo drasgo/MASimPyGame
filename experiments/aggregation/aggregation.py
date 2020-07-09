@@ -1,7 +1,7 @@
 import numpy as np
 from simulation import helperfunctions
 from simulation.swarm import Swarm
-from experiments.aggregation.aggregationAgent import Cockroach
+from experiments.aggregation.cockroach import Cockroach
 from experiments.aggregation import parameters as p
 
 """
@@ -22,9 +22,9 @@ class Aggregations(Swarm):
             object_loc = p.OBJECT_LOC
 
             if p.OUTSIDE:
-                scale = [300, 300]
+                scale = p.round_v([p.S_WIDTH*.3, p.S_HEIGHT*.3])
             else:
-                scale = [700, 700]
+                scale = p.round_v([p.S_WIDTH*.7, p.S_HEIGHT*.7]) 
 
             filename = 'experiments/flocking/images/convex.png' if p.CONVEX else 'experiments/flocking/images/redd.png'
 
@@ -35,12 +35,12 @@ class Aggregations(Swarm):
 
 
         # add sites to the environment if present
-        #area_loc1, scale1, bigB1, area_loc2, scale2, bigB2 = p.experiment2(self.screen, p.OUTSIDE)
-        area_loc1, scale1, bigB1 = p.experiment0(self.screen, p.OUTSIDE)
+        area_loc1, scale1, bigB1, area_loc2, scale2, bigB2 = p.experiment2(self.screen, p.OUTSIDE)
+        #area_loc1, scale1, bigB1 = p.experiment0(self.screen, p.OUTSIDE)
         filename2 = 'experiments/aggregation/images/greyc2.png' if bigB1 else 'experiments/aggregation/images/greyc1.png'
-        #filename3 = 'experiments/aggregation/images/greyc2.png' if bigB2 else 'experiments/aggregation/images/greyc1.png'
+        filename3 = 'experiments/aggregation/images/greyc2.png' if bigB2 else 'experiments/aggregation/images/greyc1.png'
         self.objects.add_object(file=filename2, pos=area_loc1, scale=scale1, type='site')
-        #self.objects.add_object(file=filename3, pos=area_loc2, scale=scale2, type='site')
+        self.objects.add_object(file=filename3, pos=area_loc2, scale=scale2, type='site')
 
 
         # add agents to the environment

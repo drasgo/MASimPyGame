@@ -73,8 +73,6 @@ class Cockroach(Agent):
     def siteAreaBehaviour(self, numNeighbors):
         assert numNeighbors >= 0
 
-        baselineProbStop = 0.5
-
         table1 = {0:0.03, 1:0.42, 2:0.5, 3:0.51}
         table2 = {0:1, 1:1/49, 2:1/424, 3:1/700, 4:1/1306}
 
