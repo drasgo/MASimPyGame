@@ -1,9 +1,9 @@
 import pygame
 import random as rd
 import numpy as np
-from simulation import helperfunctions
+from simulation import utils
 from simulation.agent import Agent
-from experiments.aggregation import parameters as p
+from experiments.aggregation.config import config
 
 """
 Specific the aggregation agent properties and actions
@@ -11,11 +11,11 @@ Specific the aggregation agent properties and actions
 
 
 class Cockroach(Agent):
-    def __init__(self, pos, v, aggregation, image='experiments/aggregation/images/color_ant.png'):
+    def __init__(self, pos, v, aggregation, index, image='experiments/aggregation/images/color_ant.png'):
         super(Cockroach,self).__init__(pos,v,image,
-                                              mass=p.MASS, max_speed=p.MAX_SPEED,
-                                              width=p.WIDTH, height=p.HEIGHT,
-                                              dT=p.dT)
+                                              mass=config["agent"]["mass"], max_speed=config["agent"]["max_speed"],
+                                              width=config["agent"]["width"], height=config["agent"]["height"],
+                                              dT=config["agent"]["dt"], index=index)
         self.aggregation = aggregation
         self.wandering = True
         self.transition_of_state = None
@@ -37,15 +37,15 @@ class Cockroach(Agent):
         #avoid any obstacles in the environment
 
         for area in self.aggregation.objects.sites:
-            if self.transition_of_state != None and self.transition_counter < p.NUM_STEPS:
+            if self.transition_of_state is not None and self.transition_counter < config["cockroach"]["num_steps"]:
                 self.transition_counter = self.transition_counter + 1
-            elif self.transition_counter == p.NUM_STEPS:
+            elif self.transition_counter == config["cockroach"]["num_steps"]:
                 self.transition_counter = 0
                 self.transition_of_state = None
                 self.change_state()
             else:
                 collide = pygame.sprite.collide_mask(self, area)
-                neighbors = self.aggregation.find_neighbors(self, p.RADIUS_VIEW)
+                neighbors = self.aggregation.find_neighbors(self, config["cockroach"]["radius_view"])
                 siteProb = self.siteAreaBehaviour(len(neighbors))
                 if bool(collide) and rd.random() < siteProb:
                     # Enter in transition of state
@@ -61,12 +61,12 @@ class Cockroach(Agent):
             if bool(collide) and self.wandering:
                 self.avoid_obstacle()
 
-        total_force = self.wander(p.WANDER_DIST,p.WANDER_RADIUS,p.WANDER_ANGLE) * p.WANDER_WEIGHT
+        total_force = self.wander(config["cockroach"]["wander_dist"],config["cockroach"]["wander_radius"],config["cockroach"]["wander_angle"]) * config["cockroach"]["wander_weight"]
 
 
         # adjust the direction of the boid
         if self.wandering:
-            self.steering += helperfunctions.truncate(total_force / self.mass, p.MAX_FORCE)
+            self.steering += utils.truncate(total_force / self.mass, config["cockroach"]["max_force"])
 
 
     # Defines the behaviour of the agent in a Site
@@ -75,8 +75,6 @@ class Cockroach(Agent):
 
         table1 = {0:0.03, 1:0.42, 2:0.5, 3:0.51}
         table2 = {0:1, 1:1/49, 2:1/424, 3:1/700, 4:1/1306}
-
-        prob = 0
 
         if self.wandering:
             if numNeighbors > 3:

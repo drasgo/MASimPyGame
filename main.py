@@ -1,10 +1,9 @@
-from simulation.simulation import Simulation
 import pygame
 
-#choose which parameters to load, comment the other out
-from experiments.flocking import parameters as p
-from experiments.aggregation import parameters as p
-from experiments.covid import parameters as p
+# from experiments.aggregation.config import config
+from experiments.covid.config import config
+# from experiments.flocking.config import config
+from simulation.simulation import Simulation
 
 """
 Code for multi-agent simulation in PyGame with/without physical objects in the environment
@@ -12,6 +11,7 @@ Code for multi-agent simulation in PyGame with/without physical objects in the e
 
 if __name__ == "__main__":
     pygame.init()
-    sim = Simulation(num_agents=p.N_AGENTS, screen_size=p.SCREEN,
-                     swarm_type=p.SWARM, iterations=p.FRAMES)
+    sim = Simulation(num_agents=config["base"]["n_agents"],
+                     screen_size=(config["screen"]["width"], config["screen"]["height"]),
+                     swarm_type=config["base"]["swarm_type"], iterations=config["screen"]["frames"])
     sim.run()

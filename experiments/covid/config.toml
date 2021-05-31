@@ -1,0 +1,50 @@
+[base]
+swarm_type       = 'covid'
+n_agents = 100
+object_location  = [500, 500]
+
+[screen]
+frames = inf
+height = 1000
+width  = 1000
+
+[population]
+convex    = true
+obstacles = true
+outside   = false
+
+[person]
+#velocity force
+max_force         = 0.6
+#view of neighbor agents
+radius_view       = 25
+
+#wandering definition
+wander_radius = 3.0
+wander_dist = 0.5
+wander_angle = 2.0
+
+#transmition and susceptibility probabilities
+p_cough = 0.8
+p_infected = 0.9
+time_transmittable = 700 #comparison to 1 week
+time_recovery = 1400  #comparison to 2 weeks
+droplets = 25 #How long the cough droplets remain in the air
+# BLINK_INTERVAL = 50
+
+
+
+[agent]
+height    = 5
+width     = 5
+dt        = 0.2
+mass      = 50
+max_speed = 5.0
+min_speed = 3.0
+
+[plot]
+red       = [255,0,0]
+orange    = [255,128,0]
+green     = [0,255,0]
+
+# Specification: https://toml.io/

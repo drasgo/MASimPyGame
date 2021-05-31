@@ -1,0 +1,34 @@
+[base]
+swarm_type       = 'flock'
+n_agents = 40
+object_location  = [500, 500]
+
+[screen]
+frames = inf
+height = 1000
+width  = 1000
+
+[flock]
+convex    = true
+obstacles = true
+outside   = false
+
+[boid]
+#velocity force
+max_force         = 8.0
+#view of neighbor agents
+radius_view       = 70
+#weights for velocity forces
+alignment_weight  = 4.5
+cohesion_weight   = 3.5
+separation_weight = 6.0
+
+[agent]
+height    = 8
+width     = 10
+dt        = 0.2
+mass      = 20
+max_speed = 7.0
+min_speed = 4.0
+
+# Specification: https://toml.io/
