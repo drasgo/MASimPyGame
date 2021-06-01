@@ -91,18 +91,18 @@ class Boid(Agent):
         # find all the neighbors of a boid based on its radius view
         neighbors = self.flock.find_neighbors(self, config["boid"]["radius_view"])
 
-        pre_align_force, pre_cohesion_force, separate_force = self.flock.find_neighbor_velocity_center_separation(self,
-                                                                                                                  neighbors)
-        #
         # if there are neighbors, estimate the influence of their forces
         if neighbors:
+            pre_align_force, pre_cohesion_force, separate_force = self.flock.find_neighbor_velocity_center_separation(self,
+                                                                                                                      neighbors)
             align_force = self.align(pre_align_force)
             cohesion_force = self.cohesion(pre_cohesion_force)
         #
         else:
-            align_force, cohesion_force = (
+            align_force, cohesion_force, separate_force = (
                 np.zeros(2),
                 np.zeros(2),
+                np.zeros(2)
             )
         return align_force, cohesion_force, separate_force
 
