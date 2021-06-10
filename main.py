@@ -1,8 +1,8 @@
 import pygame
 
 # from experiments.aggregation.config import config
-from experiments.covid.config import config
-# from experiments.flocking.config import config
+# from experiments.covid.config import config
+from experiments.flocking.config import config
 from simulation.simulation import Simulation
 
 """

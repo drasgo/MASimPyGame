@@ -90,17 +90,19 @@ def plusminus() -> int:
     return 1 if (random.random() > 0.5) else -1
 
 
-def rotate(vector: np.ndarray) -> np.ndarray:
+def rotate(vector: np.ndarray, lower_angle: int=150, upper_angle: int=210) -> np.ndarray:
     """
     Randomly rotate the input vector
 
     Args:
     ----
         vector (numpy.ndarray):
+        lower_angle (int): Defaults to 150
+        upper_angle (int): Defaults to 210
 
     """
     new_vector = np.zeros(2)
-    theta = np.deg2rad(random.randint(150, 210))
+    theta = np.deg2rad(random.randint(lower_angle, upper_angle))
     cs = np.cos(theta)
     sn = np.sin(theta)
     new_vector[0] = vector[0] * cs - vector[1] * sn

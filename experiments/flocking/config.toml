@@ -10,7 +10,7 @@ width  = 1000
 
 [flock]
 convex    = true
-obstacles = true
+obstacles = false
 outside   = false
 
 [boid]

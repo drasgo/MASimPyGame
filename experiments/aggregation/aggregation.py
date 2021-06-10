@@ -14,7 +14,6 @@ class Aggregations(Swarm):
         super(Aggregations, self).__init__(screen_size)
         self.object_loc = config["aggregation"]["outside"]
 
-
     def initialize(self, num_agents):
 
         # add obstacle/-s to the environment if present
@@ -58,4 +57,3 @@ class Aggregations(Swarm):
                         coordinates = utils.generate_coordinates(self.screen)
 
             self.add_agent(Cockroach(pos=np.array(coordinates),v=None, aggregation=self, index=index))
-

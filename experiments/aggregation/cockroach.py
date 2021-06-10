@@ -32,7 +32,6 @@ class Cockroach(Agent):
             self.wandering = True
             self.v = self.set_velocity()
 
-
     def update_actions(self):
         #avoid any obstacles in the environment
 
@@ -67,7 +66,6 @@ class Cockroach(Agent):
         # adjust the direction of the boid
         if self.wandering:
             self.steering += utils.truncate(total_force / self.mass, config["cockroach"]["max_force"])
-
 
     # Defines the behaviour of the agent in a Site
     def siteAreaBehaviour(self, numNeighbors):

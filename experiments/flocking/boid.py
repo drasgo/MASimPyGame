@@ -51,7 +51,9 @@ class Boid(Agent):
             dT=config["agent"]["dt"],
             index=index
         )
-
+        self.avoided_obstacles: bool = False
+        self.prev_pos = None
+        self.prev_v = None
         self.flock = flock
 
     def update_actions(self) -> None:
@@ -66,7 +68,19 @@ class Boid(Agent):
         for obstacle in self.flock.objects.obstacles:
             collide = pygame.sprite.collide_mask(self, obstacle)
             if bool(collide):
+                # If boid gets stuck because when avoiding the obstacle ended up inside of the object,
+                # resets the position to the previous one and do a 180 degree turn back
+                if not self.avoided_obstacles:
+                    self.prev_pos = self.pos.copy()
+                    self.prev_v = self.v.copy()
+
+                else:
+                    self.pos = self.prev_pos.copy()
+                    self.v = self.prev_v.copy()
+
+                self.avoided_obstacles = True
                 self.avoid_obstacle()
+                return
 
         align_force, cohesion_force, separate_force = self.neighbor_forces()
 
